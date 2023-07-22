@@ -14,6 +14,9 @@ body {
   .login {
     width: 380px;
   }
+  body {
+    background-image: url("/public/images/bg_mobile.png");
+  }
 }
 .login{
   max-width:450px;
