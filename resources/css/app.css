@@ -3,10 +3,18 @@
 @tailwind utilities;
 
 body {
-   background-image: url("/public/bg.png");
+   background-image: url("/public/images/bg.png");
+   background-size: cover;
 }
 
-
+@media (max-width: 768px) {
+  .icon{
+    display: none;
+  }
+  .login {
+    width: 380px;
+  }
+}
 .login{
   max-width:450px;
   height: 280px;
@@ -18,7 +26,8 @@ body {
   border-radius:12px;
   align-items: center;
   margin-bottom: 100px;
-  
+  backdrop-filter: blur(20px);
+ 
 }
 p {
   color: rgb(0, 0, 0);
