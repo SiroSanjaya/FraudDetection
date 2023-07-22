@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth/Login');
-});
+Route::get('', [PagesController::class, 'dashboard'])->name('dashboard');
+Route::get('auth/google', [AuthController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/callback', [AuthController::class, 'callbackGoogle']);
+Route::get('/login', [PagesController::class, 'Login'])->name('login');
+Route::get('/select', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
+Route::post('/selected', [PagesController::class, 'SelectedUnit'])->name('SelectedUnit');

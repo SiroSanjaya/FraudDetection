@@ -17,9 +17,16 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'UserID';
+    public $incrementing = true;
+    public $timestamps = true;
+
     protected $fillable = [
         'name',
         'email',
+        'googleID',
+        'role',
+        'BisnisID',
         'password',
     ];
 
@@ -39,7 +46,6 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

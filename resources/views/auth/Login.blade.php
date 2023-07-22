@@ -31,23 +31,20 @@
       </div >
       <div class="col-md- col-lg-5 offset-xl-1">
  <center>
-        <img src="images/logo.png"
+        <img src="/images/logo.png"
           class="img-fluid" alt="Phone image"> <br>
 </center>
 
 <!-- Push Back-end  -->
   <div class="login">
   <p class=" fw-bold ">Sign in </p> <p class="  "> eLearning</p><br>
-  <button type="button" class="login-with-google-btn" >
-  Sign in with Google
-</button>
+  <a href="{{ route('google-auth') }}">
+    <button type="button" class="login-with-google-btn" >
+    Sign in with Google
+  </button>
+  </a>
   </div>
 
-
-
-          
-
-       
  
 </section>
 </body>
