@@ -4,14 +4,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="/template/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/template/assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/logo.png">
+  <link rel="icon" type="image/png" href="/images/logo.png">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Dashboard eFishery Learning
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <link href="/template/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
@@ -22,25 +23,26 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  @include('admin.layout.aside') 
+  <div class="min-height-300  position-absolute w-100"></div>
+  @include('admin.layout.aside')
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     @include('admin.layout.navbar')
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      @yield('content') 
-      @include('admin.layout.footer') 
+      @yield('content')
+      @include('admin.layout.footer')
     </div>
   </main>
-  @include('admin.layout.plugin') 
-    
+  @include('admin.layout.plugin')
+
   <!--   Core JS Files   -->
   <script src="/template/assets/js/core/popper.min.js"></script>
   <script src="/template/assets/js/core/bootstrap.min.js"></script>
   <script src="/template/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="/template/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="/template/assets/js/plugins/chartjs.min.js"></script>
+  <script src="https://kit.fontawesome.com/ed9e9e0b29.js" crossorigin="anonymous"></script>
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -50,15 +52,15 @@
     gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
     gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
     new Chart(ctx1, {
-      type: "line",
+      type: "bar",
       data: {
         labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
           label: "Mobile apps",
           tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
+          borderWidth: 20,
+          pointRadius: 50,
+          borderColor: "#4DC7A2",
           backgroundColor: gradientStroke1,
           borderWidth: 3,
           fill: true,
@@ -91,7 +93,7 @@
             ticks: {
               display: true,
               padding: 10,
-              color: '#fbfbfb',
+              color: '#black',
               font: {
                 size: 11,
                 family: "Open Sans",

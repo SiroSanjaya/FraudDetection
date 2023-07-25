@@ -38,4 +38,16 @@ class PagesController extends Controller
 
         return redirect()->route('dashboard');
     }
+    public function ManageCourses()
+    {
+        return view('admin.ManageCourses');
+    }
+    public function ManageVideos()
+    {
+        return view('admin.ManageVideos');
+    }
+    public function AddCourses()
+    {
+        return view ('admin.CrudCourses.AddCourses');
+    }
 }

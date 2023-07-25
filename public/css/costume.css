@@ -1,6 +1,6 @@
 body {
     background: url("/images/bg-select.png"), lightgray 50% / cover no-repeat;
-    background-size: cover;
+  
 }
 
 .back {
@@ -9,11 +9,18 @@ body {
     font-size: 40px;
 }
 
+
+
+
 .SelectUnit {
     height: 100vh;
     padding: 10rem;
 }
 
+.title {
+    font-size: 30px;
+    color: #000;
+}
 .SelectUnit > .card {
     border-radius: 22px;
     background: linear-gradient(

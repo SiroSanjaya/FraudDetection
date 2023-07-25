@@ -21,3 +21,6 @@ Route::get('auth/google/callback', [AuthController::class, 'callbackGoogle']);
 Route::get('/login', [PagesController::class, 'Login'])->name('login');
 Route::get('/select', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
 Route::post('/selected', [PagesController::class, 'SelectedUnit'])->name('SelectedUnit');
+Route::get('/ManageCourses', [PagesController::class, 'ManageCourses'])->name('ManageCourses');
+Route::get('/ManageVideos', [PagesController::class, 'ManageVideos'])->name('ManageVideos');
+Route::get('/AddCourses', [PagesController::class, 'AddCourses'])->name('AddCourses');
