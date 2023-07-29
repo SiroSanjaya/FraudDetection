@@ -27,7 +27,7 @@
 
                         <option value="">Select Bisnis Unit</option>
                         @foreach ($unit as $u)
-                            <option value="{{ $u->BisnisID }}">{{ $u->BisnisUnit }}</option>
+                            <option value="{{ $u->Bisnis_Unit_Id }}">{{ $u->Bisnis_Unit_Name }}</option>
                         @endforeach
                     </select>
                     <button class="btn btn-lg btn-block btn-primary" style="background-color: #1E4A58;"

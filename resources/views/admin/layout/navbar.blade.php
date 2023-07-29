@@ -1,8 +1,8 @@
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl "  data-scroll="false">
     <div class="container-fluid py-1 px-3">
       <nav aria-label="breadcrumb">
-          <h1 class="font-weight-bolder text-black mb-0">Hello Admin!</h1>
-        <h5 class=" text-black active" aria-current="page">Welcome to Dashboard Elearning eFishery</h5>
+          <h5 class="font-weight-bolder text-black mb-0">Hello {{ Auth::user()->name }}</h5>
+        <h6 class=" text-black active" aria-current="page">Welcome to Dashboard Elearning eFishery</h6>
 
       </nav>
       <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">

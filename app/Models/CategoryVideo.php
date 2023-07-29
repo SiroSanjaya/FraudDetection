@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BisnisUnit extends Model
+class CategoryVideo extends Model
 {
     use HasFactory;
 
@@ -14,12 +14,11 @@ class BisnisUnit extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'bisnis_unit';
-     protected $primaryKey = 'Bisnis_Unit_Id';
-    public $incrementing = true;
+    protected $table = 'category_video';
     public $timestamps = false;
 
     protected $fillable = [
-        'Bisnis_Unit_Name',
+        'Video_Id',
+        'Courses_Id',
     ];
 }

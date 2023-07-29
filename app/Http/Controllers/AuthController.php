@@ -18,7 +18,7 @@ class AuthController extends Controller
     {
         try {
             $google_user = Socialite::driver('google')->user();
-            $user = User::where('googleID', $google_user->getId())->first();
+            $user = User::where('Google_Id', $google_user->getId())->first();
 
             // if (explode("@", $google_user->email)[1] !== 'widyatama.ac.id') {
             //     return redirect()->to('login')->with('failed', 'Barudak Widit Hungkul Cuyy, Pake Email Widit Geura');
@@ -30,7 +30,7 @@ class AuthController extends Controller
                     // 'npm' => explode("/", $google_user->getName())[1],
                     'name' => $google_user->getName(),
                     'email' => $google_user->getEmail(),
-                    'googleID' => $google_user->getId(),
+                    'Google_Id' => $google_user->getId(),
                     'avatar' => $google_user->getAvatar(),
                 ]);
 
@@ -41,7 +41,7 @@ class AuthController extends Controller
                 
                 Auth::login($user);
                 
-                if (!empty($user->BisnisUnitID)) {
+                if (!empty($user->BisnisID)) {
                     
                     return redirect()->intended('/');
                 }
@@ -50,5 +50,12 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             dd('Error ' . $th);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('login')->with('success', 'Successfully Logout');
     }
 }

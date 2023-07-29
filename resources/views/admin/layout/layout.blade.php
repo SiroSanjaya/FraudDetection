@@ -12,7 +12,7 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/path/to/font-awesome/css/font-awesome.min.css">
   <link href="/template/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
@@ -20,6 +20,12 @@
   <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="/template/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <link href="/css/custom.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+  {{-- Sweet Alert --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {{-- JS --}}
+  <script src="/js/jquery.min.js"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -139,6 +145,12 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/template/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+
+  {{-- Custom JS --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/script.js"></script>
 </body>
 
 </html>

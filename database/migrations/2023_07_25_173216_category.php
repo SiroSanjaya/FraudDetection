@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bisnis_unit', function (Blueprint $table) {
-            $table->id('Bisnis_Unit_Id');
-            $table->string('Bisnis_Unit_Name', 20);
+        Schema::create('category_courses', function (Blueprint $table) {
+            $table->id('Category_Id');
+            $table->string('Category_Name');
+            $table->string('Category_Desc');
+            $table->string('Category_Image');
+            $table->timestamps();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bisnis_unit');
+        Schema::dropIfExists('category_courses');
     }
 };

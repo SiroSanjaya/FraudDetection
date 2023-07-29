@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BisnisUnit extends Model
+class OptionQuestion extends Model
 {
     use HasFactory;
 
@@ -14,12 +14,13 @@ class BisnisUnit extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'bisnis_unit';
-     protected $primaryKey = 'Bisnis_Unit_Id';
+    protected $table = 'option_question';
+     protected $primaryKey = 'Option_Id';
     public $incrementing = true;
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
-        'Bisnis_Unit_Name',
+        'Question_Id',
+        'Option',
     ];
 }
