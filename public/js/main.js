@@ -1,5 +1,7 @@
 (function ($) {
     "use strict";
+    
+    
 
     $(".js-select2").select2({
         closeOnSelect: false,
@@ -41,5 +43,15 @@
     $("#courses").on("select2:open", function () {
         var searchInput = $(".select2-search__field");
         searchInput.val("");
+    });
+
+    rome(input_from, {
+        dateValidator: rome.val.beforeEq(input_to),
+        time: false,
+    });
+
+    rome(input_to, {
+        dateValidator: rome.val.afterEq(input_from),
+        time: false,
     });
 })(jQuery);

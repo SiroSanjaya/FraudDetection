@@ -36,16 +36,16 @@ class AuthController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect()->route('SelectUnit');
+                return redirect()->route('SelectPosition');
             } else {
                 
                 Auth::login($user);
                 
-                if (!empty($user->BisnisID)) {
-                    
+                if (!empty($user->role)) {
                     return redirect()->intended('/');
                 }
-                return redirect()->route('SelectUnit');
+
+                return redirect()->route('SelectPosition');
             }
         } catch (\Throwable $th) {
             dd('Error ' . $th);

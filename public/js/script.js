@@ -26,7 +26,6 @@ fileInput.addEventListener("change", function () {
 
     reader.onload = function (e) {
         previewImage.src = e.target.result;
-        previewImageLink.style.display = "none";
         previewImage.style.display = "block";
     };
 
@@ -36,7 +35,6 @@ fileInput.addEventListener("change", function () {
 imageLinkInput.addEventListener("input", function () {
     const imageLink = getThumbnailFromLink(imageLinkInput.value);
     previewImageLink.src = imageLink;
-    previewImage.style.display = "none";
     previewImageLink.style.display = "block";
     Thumbnail.value = imageLink;
 });

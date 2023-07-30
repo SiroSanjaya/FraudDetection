@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\PagesController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,10 @@ Route::get('/login', [PagesController::class, 'Login'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('', [PagesController::class, 'dashboard'])->name('dashboard');
-    Route::get('/select', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
-    Route::post('/selected', [CrudController::class, 'SelectedUnit'])->name('SelectedUnit');
+    Route::get('/SelectPosition', [PagesController::class, 'SelectPosition'])->name('SelectPosition');
+    Route::post('/SelectedPosition', [CrudController::class, 'SelectedPosition'])->name('SelectedPosition');
+    Route::get('/SelectUnit', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
+    Route::post('/SelectedUnit', [CrudController::class, 'SelectedUnit'])->name('SelectedUnit');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('ManageCourses')->group(function () {
@@ -89,5 +92,23 @@ Route::middleware(['auth'])->group(function () {
                 });
             });
         });
+    });
+
+    Route::prefix('ManageEnrollment')->group(function () {
+        Route::get('/', [PagesController::class, 'ManageEnrollment'])->name('ManageEnrollment');
+        Route::get('/AddEnrollment', [PagesController::class, 'AddEnrollment'])->name('AddEnrollment');
+        Route::get('/EditEnrollment/{id}', [PagesController::class, 'EditEnrollment'])->name('EditEnrollment');
+        Route::post('/EditedEnrollment/{id}', [CrudController::class, 'EditedEnrollment'])->name('EditedEnrollment');
+        Route::post('/AddedEnrollment', [CrudController::class, 'AddedEnrollment'])->name('AddedEnrollment');
+        Route::get('/DeleteEnrollment/{id}', [CrudController::class, 'DeleteEnrollment'])->name('DeleteEnrollment');
+
+        // Route::prefix('{category}')->group(function () {
+        //     Route::get('', [PagesController::class, 'Courses'])->name('Courses');
+        //     Route::get('/AddCourses', [PagesController::class, 'AddCourses'])->name('AddCourses');
+        //     Route::get('/EditCourses/{id}', [PagesController::class, 'EditCourses'])->name('EditCourses');
+        //     Route::post('/AddedCourses', [CrudController::class, 'AddedCourses'])->name('AddedCourses');
+        //     Route::get('/DeleteCourses/{id}', [CrudController::class, 'DeleteCourses'])->name('DeleteCourses');
+        //     Route::post('/EditedCourses/{id}', [CrudController::class, 'EditedCourses'])->name('EditedCourses');
+        // });
     });
 });

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\AnswereQuestion;
 use App\Models\CategoryCourses;
 use App\Models\CategoryVideo;
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Courses;
+use App\Models\Enrollment;
 use App\Models\OptionQuestion;
 use App\Models\QuestionQuiz;
 use App\Models\Quiz;
@@ -16,6 +18,26 @@ use App\Models\Videos;
 
 class CrudController extends Controller
 {
+    // Select Position
+    public function SelectedPosition(Request $request)
+    {
+        $request->validate([
+            'Position' => 'required',
+        ]);
+
+        $data = [
+            'role' => $request->Position,
+        ];
+
+        User::where('User_Id', Auth::user()->User_Id)->update($data);
+
+        if (Auth::user()->role !== 'fts'){
+            return redirect()->route('dashboard');
+        }else{
+            return redirect()->route('SelectUnit');
+        }
+    }
+
     // Select Unit
     public function SelectedUnit(Request $request)
     {
@@ -27,10 +49,11 @@ class CrudController extends Controller
             'Bisnis_Unit_Id' => $request->BisnisUnit,
         ];
 
-        User::where('User_Id', Auth::user()->UserID)->update($data);
+        User::where('User_Id', Auth::user()->User_Id)->update($data);
 
         return redirect()->route('dashboard');
     }
+
     // Manage Courses
     public function AddedCategoryCourses(Request $request)
     {
@@ -429,4 +452,75 @@ class CrudController extends Controller
 
         return redirect()->route('QuizDetail', ['courses' => $courses, 'id' => $id])->with('success', 'Succesfully Delete Option');
     }
+
+        // Enrollment
+        public function AddedEnrollment(Request $request)
+        {
+            $request->validate([
+                'CategoryCourses' => 'required',
+                'EnrollementStart' => 'required',
+                'EnrollementEnd' => 'required',
+                'Certificate' => 'required|image|mimes:png,jpg,jpeg|max:5120'
+            ]);
+            
+            if ($request->hasFile('Certificate')) {
+                $image = $request->file('Certificate');
+                if ($image->isValid()) {
+                    $newName = $image->hashName();
+                    $image->storeAs('public/uploads/certificate/images', $newName, 'local');
+                }
+                
+                $dataCetificate = [
+                    'Category_Courses_Id' => $request->CategoryCourses,
+                    'Certificate_Image' => $newName,
+                ];
+                
+            }
+
+            $dataEnrollment = [
+                'Category_Courses_Id' => $request->CategoryCourses,
+                'Enrollment_Start' => $request->EnrollementStart,
+                'Enrollment_End' => $request->EnrollementEnd,
+            ];
+    
+            Enrollment::create($dataEnrollment);
+            Certificate::create($dataCetificate);
+    
+            return redirect()->route('ManageEnrollment')->with('success', 'Succesfully Add Enrollment');
+        }
+        public function EditedEnrollment(Request $request, $category, $id)
+        {
+            if ($request->hasFile('CoursesImage')) {
+                $image = $request->file('CoursesImage');
+                if ($image->isValid()) {
+                    $newName = $image->hashName();
+                    $image->storeAs('public/uploads/courses/images', $newName, 'local');
+                }
+    
+                $data = [
+                    'Category_Id' => CategoryCourses::where('Category_Name', $category)->first()->Category_Id,
+                    'Courses_Title' => $request->CoursesTitle,
+                    'Courses_Desc' => $request->CoursesDesc,
+                    'Courses_Module' => $request->CoursesModule,
+                    'Courses_Image' => $newName,
+                ];
+            } else {
+                $data = [
+                    'Category_Id' => CategoryCourses::where('Category_Name', $category)->first()->Category_Id,
+                    'Courses_Title' => $request->CoursesTitle,
+                    'Courses_Desc' => $request->CoursesDesc,
+                    'Courses_Module' => $request->CoursesModule,
+                ];
+            }
+    
+            Enrollment::where('Courses_Id', $id)->update($data);
+    
+            return redirect()->route('Enrollment', ['category' => $category])->with('success', 'Succesfully Edited Enrollment');
+        }
+        public function DeleteEnrollment($category, $id)
+        {
+            Enrollment::destroy($id);
+    
+            return redirect()->route('Enrollment', ['category' => $category])->with('success', 'Succesfully Delete Enrollment');
+        }
 }

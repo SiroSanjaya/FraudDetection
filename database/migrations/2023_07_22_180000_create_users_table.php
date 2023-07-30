@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->index();
             $table->string('email')->unique();
             $table->string('Google_Id');
-            $table->enum('role', ['user', 'operator', 'admin'])->default('user');
+            $table->enum('role', ['trainer', 'fts', 'admin'])->nullable();
             $table->foreignId('Bisnis_Unit_Id')->nullable()->constrained('bisnis_unit', 'Bisnis_Unit_Id')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
