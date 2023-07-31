@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AnswereQuestion;
 use App\Models\BisnisUnit;
 use App\Models\CategoryCourses;
+use App\Models\Certificate;
 use App\Models\Courses;
 use App\Models\Enrollment;
 use App\Models\OptionQuestion;
@@ -196,7 +197,8 @@ class PagesController extends Controller
     public function ManageEnrollment()
     {
         return view('admin.ManageEnrollment', [
-            'enrollment' => Enrollment::all()
+            'enrollment' => Enrollment::all(),
+            'certificate' => Certificate::all()
         ]);
     }
     public function AddEnrollment()
@@ -208,6 +210,8 @@ class PagesController extends Controller
     public function EditEnrollment($id)
     {
         return view('admin.Enrollment.EditEnrollment', [
+            'enrollment' => Enrollment::where('Enrollment_Id', $id)->first(),
+            'CategoryCourses' => CategoryCourses::all()
         ]);
     }
 }

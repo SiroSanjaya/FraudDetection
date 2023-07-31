@@ -15,7 +15,7 @@ class Courses extends Model
      * @var array<int, string>
      */
     protected $table = 'courses';
-     protected $primaryKey = 'Courses_Id';
+    protected $primaryKey = 'Courses_Id';
     public $incrementing = true;
     public $timestamps = true;
 
