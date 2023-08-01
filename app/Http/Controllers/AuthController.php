@@ -28,7 +28,7 @@ class AuthController extends Controller
                 $newUser = User::create([
                     // 'fullname' => explode("/", $google_user->getName())[2],
                     // 'npm' => explode("/", $google_user->getName())[1],
-                    'name' => $google_user->getName(),
+                    'username' => $google_user->getName(),
                     'email' => $google_user->getEmail(),
                     'Google_Id' => $google_user->getId(),
                     'avatar' => $google_user->getAvatar(),

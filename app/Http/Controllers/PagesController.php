@@ -8,6 +8,7 @@ use App\Models\BisnisUnit;
 use App\Models\CategoryCourses;
 use App\Models\Certificate;
 use App\Models\Courses;
+use App\Models\Enroll;
 use App\Models\Enrollment;
 use App\Models\OptionQuestion;
 use App\Models\QuestionQuiz;
@@ -60,12 +61,15 @@ class PagesController extends Controller
     }
     public function AddCategoryCourses()
     {
-        return view('admin.Courses.AddCategoryCourses');
+        return view('admin.Courses.AddCategoryCourses', [
+            'BisnisUnit' => BisnisUnit::all()
+        ]);
     }
     public function EditCategoryCourses($id)
     {
         return view('admin.Courses.EditCategoryCourses', [
-            'CategoryCourses' => CategoryCourses::where('Category_Id', $id)->first()
+            'CategoryCourses' => CategoryCourses::where('Category_Id', $id)->first(),
+            'BisnisUnit' => BisnisUnit::all()
         ]);
     }
 
@@ -197,7 +201,7 @@ class PagesController extends Controller
     public function ManageEnrollment()
     {
         return view('admin.ManageEnrollment', [
-            'enrollment' => Enrollment::all(),
+            'enrollment' => Enrollment::DataEnrollment(),
             'certificate' => Certificate::all()
         ]);
     }
@@ -212,6 +216,31 @@ class PagesController extends Controller
         return view('admin.Enrollment.EditEnrollment', [
             'enrollment' => Enrollment::where('Enrollment_Id', $id)->first(),
             'CategoryCourses' => CategoryCourses::all()
+        ]);
+    }
+
+    // Detail Enrollment
+    public function DetailEnrollment($category)
+    {
+        return view('admin.Enrollment.DetailEnrollment', [
+            'enrollment' => Enrollment::where('Enrollment_Title', $category)->first(),
+            'enroll' => Enroll::DataEnroll(),
+        ]);
+    }
+    public function AddDetailEnrollment($category)
+    {
+        return view('admin.Enrollment.AddDetailEnrollment', [
+            'enrollment' => enrollment::where('Enrollment_Title', $category)->first(),
+            'users' => User::all()
+        ]);
+    }
+    public function EditDetailEnrollment($category, $id)
+    {
+        return view('admin.Enrollment.EditDetailEnrollment', [
+            'enrollment' => enrollment::where('Enrollment_Title', $category)->first(),
+            'allenrollment' => enrollment::all(),
+            'enroll' => Enroll::DataEnroll()->where('Enroll_Id', $id)->first(),
+            'users' => User::all()
         ]);
     }
 }

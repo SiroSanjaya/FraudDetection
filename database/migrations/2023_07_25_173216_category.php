@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('Category_Name');
             $table->string('Category_Desc');
             $table->string('Category_Image');
+            $table->foreignId('Bisnis_Unit_Id')->constrained('bisnis_unit', 'Bisnis_Unit_Id')->onDelete('cascade');
             $table->timestamps();
         });
     }

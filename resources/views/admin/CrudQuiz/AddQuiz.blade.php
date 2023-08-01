@@ -73,9 +73,44 @@
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Quiz
                                                 Description</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Your Quiz Description" rows="3"
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Your Quiz Description" rows="3"
                                                 name="QuizDesc"></textarea>
-                                            @error('QuizDesc')
+                                                @error('QuizDesc')
+                                                <div class="mb-3">
+                                                    <p>{{ $message }}</p>
+                                                </div>
+                                                @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Quiz
+                                                Time</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Quiz Time Limit" aria-label="Quiz Time Limit"
+                                                    aria-describedby="basic-addon2" name='QuizTime'>
+                                                <span class="input-group-text" id="basic-addon2">Minute</span>
+                                            </div>
+                                            @error('QuizTime')
+                                                <div class="mb-3">
+                                                    <p>{{ $message }}</p>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Quiz Kkm</label>
+                                            <input class="form-control " type="text" placeholder="Enter Min Kkm Quiz"
+                                                name="QuizKkm">
+                                            @error('QuizKkm')
                                                 <div class="mb-3">
                                                     <p>{{ $message }}</p>
                                                 </div>
@@ -97,5 +132,4 @@
             </div>
         </div>
     </div>
-
 @endsection

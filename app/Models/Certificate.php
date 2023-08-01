@@ -21,7 +21,7 @@ class Certificate extends Model
 
     protected $fillable = [
         'Certificate',
-        'Category_Courses_Id',
+        'Enrollment_Id',
         'Certificate_Image',
     ];
 }

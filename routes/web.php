@@ -102,13 +102,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/AddedEnrollment', [CrudController::class, 'AddedEnrollment'])->name('AddedEnrollment');
         Route::get('/DeleteEnrollment/{id}', [CrudController::class, 'DeleteEnrollment'])->name('DeleteEnrollment');
 
-        // Route::prefix('{category}')->group(function () {
-        //     Route::get('', [PagesController::class, 'Courses'])->name('Courses');
-        //     Route::get('/AddCourses', [PagesController::class, 'AddCourses'])->name('AddCourses');
-        //     Route::get('/EditCourses/{id}', [PagesController::class, 'EditCourses'])->name('EditCourses');
-        //     Route::post('/AddedCourses', [CrudController::class, 'AddedCourses'])->name('AddedCourses');
-        //     Route::get('/DeleteCourses/{id}', [CrudController::class, 'DeleteCourses'])->name('DeleteCourses');
-        //     Route::post('/EditedCourses/{id}', [CrudController::class, 'EditedCourses'])->name('EditedCourses');
-        // });
+        Route::prefix('{category}')->group(function () {
+            Route::get('', [PagesController::class, 'DetailEnrollment'])->name('DetailEnrollment');
+            Route::get('/AddDetailEnrollment', [PagesController::class, 'AddDetailEnrollment'])->name('AddDetailEnrollment');
+            Route::get('/EditDetailEnrollment/{id}', [PagesController::class, 'EditDetailEnrollment'])->name('EditDetailEnrollment');
+            Route::post('/AddedDetailEnrollment', [CrudController::class, 'AddedDetailEnrollment'])->name('AddedDetailEnrollment');
+            Route::get('/DeleteDetailEnrollment/{id}', [CrudController::class, 'DeleteDetailEnrollment'])->name('DeleteDetailEnrollment');
+            Route::post('/EditedDetailEnrollment/{id}', [CrudController::class, 'EditedDetailEnrollment'])->name('EditedDetailEnrollment');
+        });
     });
 });

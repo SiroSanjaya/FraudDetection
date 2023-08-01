@@ -44,6 +44,26 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <select id="courses" class="form-control" name="BisnisUnit">
+                                                <label for="example-text-input" class="form-control-label">Bisnis Unit</label>
+                                                <option value="{{ $CategoryCourses->Bisnis_Unit_Id }}">{{ $BisnisUnit->where('Bisnis_Unit_Id', $CategoryCourses->Bisnis_Unit_Id)->first()->Category_Name }}</option>
+                                                @foreach ($BisnisUnit as $b)
+                                                    <option value="{{ $b->Bisnis_Unit_Id }}">{{ $b->Bisnis_Unit_Name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('BisnisUnit')
+                                                <div class="mb-3">
+                                                    <p>{{ $message }}</p>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Category Name</label>

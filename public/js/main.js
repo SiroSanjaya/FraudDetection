@@ -1,7 +1,5 @@
 (function ($) {
     "use strict";
-    
-    
 
     $(".js-select2").select2({
         closeOnSelect: false,
@@ -21,6 +19,7 @@
         allowClear: true,
         multiple: false,
     });
+    
 
     function iformat(icon, badge) {
         var originalOption = icon.element;
@@ -36,6 +35,33 @@
                 "</span></span>"
         );
     }
+
+    $("#id_0").datetimepicker({
+        allowInputToggle: true,
+        showClose: true,
+        showClear: true,
+        showTodayButton: true,
+        format: "MM/DD/YYYY",
+        icons: {
+            time: "fa fa-clock-o",
+
+            date: "fa fa-calendar-o",
+
+            up: "fa fa-chevron-up",
+
+            down: "fa fa-chevron-down",
+
+            previous: "fa fa-chevron-left",
+
+            next: "fa fa-chevron-right",
+
+            today: "fa fa-chevron-up",
+
+            clear: "fa fa-trash",
+
+            close: "fa fa-close",
+        },
+    });
 
     $("#courses").select2();
 
@@ -54,4 +80,5 @@
         dateValidator: rome.val.afterEq(input_from),
         time: false,
     });
+
 })(jQuery);

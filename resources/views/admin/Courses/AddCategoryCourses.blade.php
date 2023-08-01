@@ -44,6 +44,24 @@
                                     <div class="col-md-6">
 
                                     </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <select id="courses" class="form-control" name="BisnisUnit">
+                                                <option value="">Select Bisnis Unit</option>
+                                                @foreach ($BisnisUnit as $b)
+                                                    <option value="{{ $b->Bisnis_Unit_Id }}">{{ $b->Bisnis_Unit_Name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('BisnisUnit')
+                                                <div class="mb-3">
+                                                    <p>{{ $message }}</p>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Category Name</label>

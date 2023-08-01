@@ -73,6 +73,8 @@
                                                         <div class="text-capitalize">
                                                             <h5 class="card-title">{{ $q->Quiz_Title }}</h5>
                                                             <p class="card-title">{{ $q->Quiz_Desc }}</p>
+                                                            <p class="card-title">Time Limit : {{ $q->Quiz_Time }} Minute</p>
+                                                            <p class="card-title">Kkm : {{ $q->Quiz_Kkm }}</p>
                                                         </div>
                                                     </div>
                                                 </div>

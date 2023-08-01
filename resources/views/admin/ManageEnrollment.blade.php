@@ -1,6 +1,7 @@
 @extends('admin.layout.layout')
 @section('content')
     <div class="container-fluid py-4">
+        {{-- {{ dd($enrollment) }} --}}
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
@@ -38,13 +39,13 @@
                                     @foreach ($enrollment as $e)
                                     <div class="col-md-4  ">
                                         <div class="card card-profile">
-                                                <img src="{{ asset('storage/uploads/certificate/images/' . $certificate->where('Certificate_Id', $e->Enrollment_Id)->first()->Certificate_Image) }}"
-                                                    alt="Image placeholder" class="card-img-top">
+                                                <img src="{{ asset('storage/uploads/certificate/images/' . $e->Certificate_Image) }}"
+                                                    alt="Image placeholder" style="width:auto;height:200px;object-fit: contain">
                                                 <div class="row justify-content-center">
                                                     <div class="col-4 col-lg-4 order-lg-2">
                                                         <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                                                             <a
-                                                                href="{{ route('ManageEnrollment', ['category' => $e->Category_Name]) }}">
+                                                                href="{{ route('DetailEnrollment', ['category' => $e->Enrollment_Title]) }}">
                                                                 <img src="images/logo.png"
                                                                     class="rounded-circle img-fluid border border-2 border-white">
                                                             </a>
@@ -72,6 +73,8 @@
                                                         </div>
                                                         <h5 class="card-title">{{ $e->Enrollment_Title }}</h5>
                                                         <p class="card-text">{{ $e->Enrollment_Desc }}</p>
+                                                        <p class="card-text">{{ $e->Enrollment_Start }} - {{ $e->Enrollment_End }}</p>
+                                                        <p class="card-text">Expired : {{ floor((strtotime($e->Enrollment_End) - time()) / 86400) + 1 }} Day Left</p>
                                                     </div>
                                                 </div>
                                             </div>

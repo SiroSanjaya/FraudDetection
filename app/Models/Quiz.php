@@ -23,8 +23,8 @@ class Quiz extends Model
         'Courses_Id',
         'Quiz_Title',
         'Quiz_Desc',
-        'Quiz_Start',
-        'Quiz_End',
+        'Quiz_Time',
+        'Quiz_Kkm',
         'Quiz_Status',
     ];
 }

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certificate', function (Blueprint $table) {
-            $table->id('Certificate_Id');
+        Schema::create('enroll', function (Blueprint $table) {
+            $table->id('Enroll_Id');
             $table->foreignId('Enrollment_Id')->constrained('enrollment', 'Enrollment_Id')->onDelete('cascade');
-            $table->string('Certificate_Image');
+            $table->foreignId('User_Id')->constrained('users', 'User_Id')->onDelete('cascade');
+            $table->string('Enroll_Date');
+            $table->enum('Enroll_Status',['progress', 'completed'])->default('progress');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('certificate');
+        Schema::dropIfExists('enroll');
     }
 };

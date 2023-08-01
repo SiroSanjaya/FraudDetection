@@ -393,3 +393,26 @@
 .rd-days {
     margin-top: 20px;
 }
+
+.datepickers {
+    width: 100%;
+}
+.datepickers .label-control {
+    font-size: 14px;
+}
+.datepickers .form-control {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 50px !important;
+    border-radius: 40px;
+    border: none !important;
+    -webkit-box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.09) !important;
+    -moz-box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.09) !important;
+    box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.09) !important;
+}
+.datepickers .form-control:focus {
+    border-radius: 40px;
+    -webkit-box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.14) !important;
+    -moz-box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.14) !important;
+    box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.14) !important;
+}

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('Courses_Id')->constrained('courses', 'Courses_Id')->onDelete('cascade');
             $table->string('Quiz_Title');
             $table->string('Quiz_Desc');
-            $table->dateTime('Quiz_Start')->nullable();
-            $table->dateTime('Quiz_End')->nullable();
+            $table->string('Quiz_Time');
+            $table->string('Quiz_Kkm');
+            // $table->dateTime('Quiz_Start')->nullable();
+            // $table->dateTime('Quiz_End')->nullable();
             $table->enum('Quiz_Status', ['draft', 'progress', 'completed'])->default('draft');
             $table->timestamps();
         });

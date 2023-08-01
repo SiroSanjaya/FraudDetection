@@ -394,15 +394,6 @@
                                                         {{ $q->answer->pluck('Answare')->contains($o->Option) ? 'checked' : '' }} />
                                                     {{ $o->Option }}
 
-                                                    <button
-                                                        class="btn btn-white text-danger border-radius-lg p-2 mt-0 mx-md-0"
-                                                        type="button" data-bs-toggle="tooltip"
-                                                        onclick="showDeleteConfirmation(this)" data-bs-placement="left"
-                                                        title="Delete" id="delete"
-                                                        data-href='{{ route('DeleteOption', ['id' => $quiz->Quiz_Id, 'courses' => $courses->Courses_Title, 'OptionID' => $o->Option_Id]) }}'>
-                                                        <i class="fas fa-trash p-2"></i>
-                                                    </button>
-
                                                     <span class="formbold-radio-checkmark"></span>
                                                 </label>
                                             </div>

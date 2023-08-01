@@ -22,12 +22,13 @@ class User extends Authenticatable
     public $timestamps = true;
 
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'Google_Id',
         'role',
         'Bisnis_Unit_Id',
         'password',
+        'avatar',
     ];
 
     /**
@@ -48,4 +49,17 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function enroll()
+    {
+        return $this->hasMany(Enroll::class, 'User_Id', 'User_Id');
+    }
+
+    // Define the relationship with BisnisUnit model
+    public function BisnisUnit()
+    {
+        return $this->belongsTo(BisnisUnit::class, 'Bisnis_Unit_Id', 'Bisnis_Unit_Id');
+    }
+
+    
 }

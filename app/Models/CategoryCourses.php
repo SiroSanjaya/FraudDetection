@@ -15,7 +15,7 @@ class CategoryCourses extends Model
      * @var array<int, string>
      */
     protected $table = 'category_courses';
-     protected $primaryKey = 'Category_Id';
+    protected $primaryKey = 'Category_Id';
     public $incrementing = true;
     public $timestamps = true;
 
@@ -23,5 +23,6 @@ class CategoryCourses extends Model
         'Category_Name',
         'Category_Desc',
         'Category_Image',
+        'Bisnis_Unit_Id',
     ];
 }

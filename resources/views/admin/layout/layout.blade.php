@@ -20,13 +20,14 @@
     <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="/template/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
     <link href="/css/custom.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- JS --}}
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap-datepicker.min.js"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -147,12 +148,17 @@
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="/template/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
     {{-- Custom JS --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/rome.js"></script>
+    <script src="/js/moment-with-locales.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/main.js"></script>
+
+
 </body>
 
 </html>
