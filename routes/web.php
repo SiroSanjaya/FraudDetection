@@ -111,4 +111,16 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/EditedDetailEnrollment/{id}', [CrudController::class, 'EditedDetailEnrollment'])->name('EditedDetailEnrollment');
         });
     });
+    
+    Route::prefix('DataUser')->group(function () {
+        Route::get('/', [PagesController::class, 'DataUser'])->name('DataUser');
+        Route::get('/DetailUser', [PagesController::class, 'DetailUser'])->name('DetailUser');
+        Route::get('/AddUser', [PagesController::class, 'AddUser'])->name('AddUser');
+        Route::get('/EditUser', [PagesController::class, 'EditUser'])->name('EditUser');
+    });
+    Route::prefix('ManageAttendence')->group(function () {
+        Route::get('/', [PagesController::class, 'ManageAttendence'])->name('ManageAttendence');
+        Route::get('/AddAttendence', [PagesController::class, 'AddAttendence'])->name('AddAttendence');
+        Route::get('/EditAttendence', [PagesController::class, 'EditAttendence'])->name('EditAttendence');
+    });
 });

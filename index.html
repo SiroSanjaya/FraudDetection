@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .table-container {
+      margin: 20px;
+      display: none; /* Sembunyikan tabel secara default */
+    }
+
+    .table-container table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .table-container table, th, td {
+      border: 1px solid black;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="showTable('tableA')">Show Table A</button>
+<button onclick="showTable('tableB')">Show Table B</button>
+
+<div id="tableA" class="table-container">
+  <h2>Table A</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Column A1</th>
+        <th>Column A2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data A1</td>
+        <td>Data A2</td>
+      </tr>
+      <tr>
+        <td>Data A3</td>
+        <td>Data A4</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="tableB" class="table-container">
+  <h2>Table B</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Column B1</th>
+        <th>Column B2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data B1</td>
+        <td>Data B2</td>
+      </tr>
+      <tr>
+        <td>Data B3</td>
+        <td>Data B4</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Fungsi untuk menampilkan tabel berdasarkan ID
+  function showTable(tableId) {
+    // Sembunyikan semua tabel
+    var tables = document.getElementsByClassName('table-container');
+    for (var i = 0; i < tables.length; i++) {
+      tables[i].style.display = 'none';
+    }
+
+    // Tampilkan tabel yang sesuai
+    var tableToShow = document.getElementById(tableId);
+    if (tableToShow) {
+      tableToShow.style.display = 'block';
+    }
+  }
+
+  // Tampilkan tabel A secara otomatis
+  showTable('tableA');
+</script>
+
+</body>
+</html>

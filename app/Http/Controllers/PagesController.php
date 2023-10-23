@@ -243,4 +243,32 @@ class PagesController extends Controller
             'users' => User::all()
         ]);
     }
+    public function DataUser()
+    {
+        return view('admin.DataUser');
+    }
+    public function DetailUser()
+    {
+        return view('admin.User.DetailUser');
+    }
+    public function AddUser()
+    {
+        return view('admin.User.AddUser');
+    }
+    public function EditUser()
+    {
+        return view('admin.User.EditUser');
+    }
+    public function ManageAttendence()
+    {
+        return view('admin.ManageAttendence');
+    }
+    public function AddAttendence()
+    {
+        return view('admin.CrudAttendence.AddAttendence');
+    }
+    public function EditAttendence()
+    {
+        return view('admin.CrudAttendence.EditAttendence');
+    }
 }
