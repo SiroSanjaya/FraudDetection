@@ -22,11 +22,14 @@ Route::get('auth/google/callback', [AuthController::class, 'callbackGoogle']);
 Route::get('/login', [PagesController::class, 'Login'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
+    Route::middleware(Auth::user()->role === 'Trainer')->group(function () {
     Route::get('', [PagesController::class, 'dashboard'])->name('dashboard');
     Route::get('/SelectPosition', [PagesController::class, 'SelectPosition'])->name('SelectPosition');
     Route::post('/SelectedPosition', [CrudController::class, 'SelectedPosition'])->name('SelectedPosition');
     Route::get('/SelectUnit', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
     Route::post('/SelectedUnit', [CrudController::class, 'SelectedUnit'])->name('SelectedUnit');
+    Route::get('/SelectRegion', [PagesController::class, 'SelectRegion'])->name('SelectRegion');
+    Route::post('/SelectedRegion', [CrudController::class, 'SelectedRegion'])->name('SelectedRegion');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('ManageCourses')->group(function () {
@@ -116,11 +119,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [PagesController::class, 'DataUser'])->name('DataUser');
         Route::get('/DetailUser', [PagesController::class, 'DetailUser'])->name('DetailUser');
         Route::get('/AddUser', [PagesController::class, 'AddUser'])->name('AddUser');
-        Route::get('/EditUser', [PagesController::class, 'EditUser'])->name('EditUser');
+        Route::get('/EditUser/{id}', [PagesController::class, 'EditUser'])->name('EditUser');
+        Route::post('/EditedUser/{id}', [CrudController::class, 'EditedUser'])->name('EditedUser');
+        Route::get('/DeletedUser/{id}', [CrudController::class, 'DeletedUser'])->name('DeletedUser');
     });
     Route::prefix('ManageAttendence')->group(function () {
         Route::get('/', [PagesController::class, 'ManageAttendence'])->name('ManageAttendence');
         Route::get('/AddAttendence', [PagesController::class, 'AddAttendence'])->name('AddAttendence');
         Route::get('/EditAttendence', [PagesController::class, 'EditAttendence'])->name('EditAttendence');
+    });
+});
+
+    //users
+    Route::prefix('Users')->group(function () {
+        Route::get('/HomeUser', [PagesController::class, 'HomeUser'])->name('HomeUser');
+        Route::get('/VideosUser', [PagesController::class, 'VideosUser'])->name('VideosUser');
+        Route::get('/DetailVideos/{id}', [PagesController::class, 'DetailVideos'])->name('DetailVideos');
+
+        Route::prefix('{courses}')->group(function () {
+            Route::get('/', [PagesController::class, 'ShowVideos'])->name('ShowVideos');
+        });
     });
 });

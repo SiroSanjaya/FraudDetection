@@ -27,6 +27,7 @@ class User extends Authenticatable
         'Google_Id',
         'role',
         'Bisnis_Unit_Id',
+        'id_region',
         'password',
         'avatar',
     ];

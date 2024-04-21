@@ -14,7 +14,7 @@ class Videos extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'videos';
+     protected $table = 'videos';
      protected $primaryKey = 'Video_Id';
     public $incrementing = true;
     public $timestamps = true;

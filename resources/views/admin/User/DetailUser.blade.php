@@ -26,236 +26,176 @@
         </div>
         <div class="row mt-4">
         <div class="">
-            <div class="card ">
-                <div class="card-header pb-0 p-3">
-                    <div class="d-flex justify-content-between">
-                    <div class="col-6 ">
-                    <div class="nav-wrapper position-relative end-0">
-              <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                <li class="nav-item" onclick="showTable('Workshop')">
-                  <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true" >
-                    <i class="ni ni-books" ></i>
-                    <span class="ms-2">Workshop</span>
-                  </a>
-                </li>
-                <li class="nav-item" onclick="showTable('tableB')">
-                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                    <i class="ni ni-email-83"></i>
-                    <span class="ms-2">Quiz</span>
-                  </a>
-                </li>
-                <li class="nav-item" onclick="showTable('Attendence')">
-                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                    <i class="ni ni-settings-gear-65"></i>
-                    <span class="ms-2">Attendence</span>
-                  </a>
-                </li>
-              </ul>
-     
-  <div class="container">
-    <div class="row mt-4">
-      <div class="col">
-    
-       
-      </div>
-    </div>
+           
 
 
-    <div class="table-responsive p-0">
 
-      </div>
-    </div>
             </div>
                             </div>
-                            <div class="col-3 text-end">
-                            <div class="input-group">
-            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-            <input type="text" class="form-control" placeholder="Type here...">
-          </div>
-                            </div>
-                        </div>
-                        <div class="table-container" id="Workshop"> 
-                        <table class="table align-items-center justify-content-center mb-0"  >
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Username</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Bisnis Unit</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Workshop</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Date</th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                                        Completion</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-3">
-                                            <h6 class="mb-0 text-sm">SS01Q2</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Adi Prasetyo</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Fish</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Access Point Installation</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">03 October 2023</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <span class="me-2 text-xs font-weight-bold">100%</span>
-                                            <div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success " role="progressbar"
-                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width: 100%;"></div>
+                            <div class="row">
+                                <div class="col-md-8 mt-4">
+                                  <div class="card">
+                                    <div class="card-header pb-0 px-3">
+                                      <h6 class="mb-0">Order Detail</h6>
+                                    </div>
+                                    <div class="card-body pt-4 p-3">
+                                      <ul class="list-group">
+                                        <li class="list-group-item border-0 d-flex p-4 mb-2 border-radius-lg">
+                                          <div class="d-flex flex-column">
+                                          
+                                            <div >
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px; ">Order ID</span>: 
+                                                    <span class="text-dark  ms-sm-2">ASD-7305-FDR-04-24-KHZM</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Customer Name</span>: 
+                                                    <span class="text-dark ms-sm-2 ">CHRISTOPHER SUSANTO</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Serial Number</span>: 
+                                                    <span class="text-dark ms-sm-2 ">TBSF-2064-2302-0101; TBSF-2064-2302-0106; TBSF-2064-2302-0177; TBSF-2066-2401-0024</span>
+                                                    
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                  <span style="display: inline-block; width: 150px;">Feeder Name</span>: 
+                                                  <span class="text-dark ms-sm-2 ">-</span>
+                                              </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Feeder Type</span>: 
+                                                    <span class="text-dark ms-sm-2 ">SS15005360R (udang); SS15005360R (udang); SS15005360R (udang); SS15005360R (udang)</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Order Quantity</span>: 
+                                                    <span class="text-dark ms-sm-2 ">4</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Request Quantity</span>: 
+                                                    <span class="text-dark ms-sm-2 ">4</span>
+                                                    
                                                 </div>
                                             </div>
+                                            
+                                          </div>
+                                 
+                                         
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 mt-4">
+                                  <div class="card h-100 mb-4">
+                                    <div class="card-header pb-0 px-3">
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <h6 class="mb-0">Ticket Detail</h6>
                                         </div>
-                                    </td>
-                                    <td class="align-middle">
-                                    <a href="{{ route('DetailUser') }}"> 
-                                        <button class="btn btn-link text-secondary mb-0" > 
-                                            <i class="fa fa-ellipsis-v text-xs"></i>
-                                        </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            </div>
-
-                            <div id="tableB" class="table-container"> 
-                        <table class="table align-items-center justify-content-center mb-0"  >
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Username</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Bisnis Unit</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Quiz</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Score</th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                                        Completion</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-3">
-                                            <h6 class="mb-0 text-sm">312</h6>
+                                        
+                                      </div>
+                                    </div>
+                                    <div class="card-body pt-4 p-3">
+                                      <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                        <div class="d-flex align-items-center">
+                                          <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                                          <div class="d-flex flex-column">
+                                            <h6 class="mb-1 text-dark text-sm">Created At</h6>
+                                            <span class="text-xs">16 April 2024</span>
+                                          </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Adi Prasetyo</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Fish</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Product Knowledge Water Quality </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">85 </p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <span class="me-2 text-xs font-weight-bold">70%</span>
-                                            <div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success " role="progressbar"
-                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width: 100%;"></div>
-                                                </div>
+                                      </li>
+                                      <ul class="list-group">
+                                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                          <div class="d-flex align-items-center">
+                                            <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
+                                            <div class="d-flex flex-column">
+                                              <h6 class="mb-1 text-dark text-sm">Activity Type</h6>
+                                              <span class="text-xs">Feeder Delivery</span>
+                                              
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                    <a href="{{ route('DetailUser') }}"> 
-                                        <button class="btn btn-link text-secondary mb-0" > 
-                                            <i class="fa fa-ellipsis-v text-xs"></i>
-                                        </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <div id="Attendence" class="table-container"> 
-                        <table class="table align-items-center justify-content-center mb-0"  >
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Username</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Bisnis Unit</th>
-
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                                        Completion</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-3">
-                                            <h6 class="mb-0 text-sm">210</h6>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-2">Adi Prasetyo</p>
-                                    </td>
-                                    <td>
-                                        <span class="text-xs font-weight-bold">Fish</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <span class="me-2 text-xs font-weight-bold">70%</span>
-                                            <div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success " role="progressbar"
-                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width: 100%;"></div>
-                                                </div>
+                                          </div>
+                                         
+                                        </li>
+                                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                          <div class="d-flex align-items-center">
+                                            <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                                            <div class="d-flex flex-column">
+                                              <h6 class="mb-1 text-dark text-sm">Activities</h6>
+                                              <span class="text-xs">Non Activities</span>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                    <a href="{{ route('DetailUser') }}"> 
-                                        <button class="btn btn-link text-secondary mb-0" > 
-                                            <i class="fa fa-ellipsis-v text-xs"></i>
-                                        </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            </div>
-                           
-                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                      <ul class="list-group">
+                                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                          <div class="d-flex align-items-center">
+                                            <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                                            <div class="d-flex flex-column">
+                                              <h6 class="mb-1 text-dark text-sm">Driver PIC</h6>
+                                              <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                              name="BisnisUnit">
+      
+                                              <option value="">Select PIC</option>
+                                         
+                                                  <option value="">Muhamad Sirojudin</option>
+                                                  <option value="">Tommy Albert Sandehang</option>
+                                          </select>
+                                            </div>
+                                          </div>
+                                          
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12 mt-4">
+                                  <div class="card">
+                                    <div class="card-header pb-0 px-3">
+                                      <h6 class="mb-0">Shipment Detail</h6>
+                                    </div>
+                                    <div class="card-body pt-4 p-3">
+                                      <ul class="list-group">
+                                        <li class="list-group-item border-0 d-flex p-4 mb-2 border-radius-lg">
+                                          <div class="d-flex flex-column">
+                                          
+                                            <div >
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px; ">
+                                                      Receiver Name</span>: 
+                                                    <span class="text-dark  ms-sm-2">Alim Anhar</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Receiver Contact</span>: 
+                                                    <span class="text-dark ms-sm-2 ">6281803300800</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Shipment Origin</span>: 
+                                                    <span class="text-dark ms-sm-2 ">Kawaluyahan</span>
+                                                    
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                  <span style="display: inline-block; width: 150px;">Point</span>: 
+                                                  <span class="text-dark ms-sm-2 ">DC Bandung (Lawe)</span>
+                                              </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Shipment Address	</span>: 
+                                                    <span class="text-dark ms-sm-2 ">Daan mogot baru , taman kintamani blok LE NO 21, KOTA JAKARTA BARAT, Jakarta, 11840, Indonesia</span>
+                                                </div>
+                                                <div style="margin-bottom: 16px;">
+                                                    <span style="display: inline-block; width: 150px;">Shipment Date</span>: 
+                                                    <span class="text-dark ms-sm-2 ">-</span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                          </div>
+                                 
+                                         
+                                    </div>
+                                  </div>
+                                </div>
             </div>
         </div>
     </div>
+    
 
 <script>
   // Fungsi untuk menampilkan tabel berdasarkan ID

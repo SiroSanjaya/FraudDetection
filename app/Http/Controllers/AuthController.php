@@ -41,12 +41,18 @@ class AuthController extends Controller
                 
                 Auth::login($user);
                 
-                if (!empty($user->role)) {
-                    return redirect()->intended('/');
-                }
-
-                return redirect()->route('SelectPosition');
-            }
+            //     if (empty($user->role)) {
+            //         return redirect()->route('SelectPosition');
+            //     }else if(empty($user->Bisnis_Unit_Id)){
+            //         return redirect()->route('SelectUnit'); 
+            //     }else if($user->role === 'FTS'){
+            //         return redirect()->route('HomeUser'); 
+            //     }else{
+            //         return redirect()->intended('/');
+            //     }
+             }
+            
+            
         } catch (\Throwable $th) {
             dd('Error ' . $th);
         }

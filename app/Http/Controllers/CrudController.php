@@ -16,43 +16,68 @@ use App\Models\OptionQuestion;
 use App\Models\QuestionQuiz;
 use App\Models\Quiz;
 use App\Models\Videos;
-
+use App\Models\role;
 class CrudController extends Controller
 {
     // Select Position
-    public function SelectedPosition(Request $request)
-    {
-        $request->validate([
-            'Position' => 'required',
-        ]);
+  public function SelectedPosition(Request $request)
+{
+    $request->validate([
+        'Position' => 'required',
+    ]);
 
-        $data = [
-            'role' => $request->Position,
-        ];
+    $data = [
+        'role_Id' => $request->Position,
+    ];
 
-        User::where('User_Id', Auth::user()->User_Id)->update($data);
+    User::where('user_id', Auth::user()->user_id)->update($data);
 
-        if (Auth::user()->role !== 'fts') {
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('SelectUnit');
-        }
-    }
+    // if (Auth::user()->role === 'FTS' || Auth::user()->role === null) {
+    //     return redirect()->route('SelectUnit');
+    // } else  {
+       return redirect()->route('dashboard');
+     //}
+}
+
 
     // Select Unit
-    public function SelectedUnit(Request $request)
+    // public function SelectedUnit(Request $request)
+    // {
+    //     $request->validate([
+    //         'BisnisUnit' => 'required',
+    //     ]);
+
+    //     $data = [
+    //         'Bisnis_Unit_Id' => $request->BisnisUnit,
+    //     ];
+
+    //     User::where('user_id', Auth::user()->user_id)->update($data);
+
+    //     if(User::where('user_id', Auth::user()->role) === 'Trainer'){
+    //         $data = [
+    //             'id_region' => 1,
+    //         ];
+    //         User::where('user_id', Auth::user()->user_id)->update($data);
+    //         return redirect()->intended('/');
+    //     }
+
+    //     return redirect()->route('SelectRegion');
+    // }
+
+    // Select Region
+    public function SelectedRegion(Request $request)
     {
         $request->validate([
-            'BisnisUnit' => 'required',
+            'Region' => 'required',
         ]);
 
         $data = [
-            'Bisnis_Unit_Id' => $request->BisnisUnit,
+            'id_region' => $request->Region,
         ];
 
-        User::where('User_Id', Auth::user()->User_Id)->update($data);
+        User::where('user_id', Auth::user()->user_id)->update($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('HomeUser');
     }
 
     // Manage Courses
@@ -570,7 +595,7 @@ class CrudController extends Controller
         foreach ($request->Users as $user) {
             Enroll::create([
                 'Enrollment_Id' => $request->EnrollmentID,
-                'User_Id' => $user,
+                'user_id' => $user,
                 'Enroll_Date' => $request->EnrollDate,
             ]);
         }
@@ -588,7 +613,7 @@ class CrudController extends Controller
         foreach ($request->Users as $user) {
             Enroll::where('Enroll_Id', $id)->update([
                 'Enrollment_Id' => $request->EnrollmentID,
-                'User_Id' => $user,
+                'user_id' => $user,
                 'Enroll_Date' => $request->EnrollDate,
             ]);
         }
@@ -600,5 +625,36 @@ class CrudController extends Controller
         Enroll::destroy($id);
 
         return redirect()->route('DetailEnrollment', ['category' => $category])->with('success', 'Succesfully Delete Enroll User');
+    }
+
+    //Users
+    public function EditedUser(Request $request,  $id)
+    {
+        //$request->validate([
+            //'Users' => 'required',
+            //'username' => 'required',
+            //'role' => 'required',
+            //'Bisnis_Unit_Id' => 'required',
+            //'id_region' => 'required',
+        //]);
+
+        $data = [
+            'username' => $request->username,
+            'Bisnis_Unit_Id' => $request->BisnisUnit,
+            'role' => $request->Role,
+            'id_region' => $request->Region,
+        ];
+
+        User::where('user_id', $id)->update($data);
+
+        return redirect()->route('DataUser')->with('success', 'Succesfully Edit Category');
+
+    }
+
+    public function DeletedUser($id)
+    {
+        User::destroy($id);
+
+        return redirect()->route('DataUser')->with('success', 'Succesfully Delete Enrollment');
     }
 }

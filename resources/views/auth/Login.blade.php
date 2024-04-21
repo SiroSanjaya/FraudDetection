@@ -37,7 +37,7 @@
 
 <!-- Push Back-end  -->
   <div class="login">
-  <p class=" fw-bold ">Sign in </p> <p class="  "> eLearning</p><br>
+  <p class=" fw-bold ">Sign in </p> <p class="  "> Fraud Apps</p><br>
   <a href="{{ route('google-auth') }}">
     <button type="button" class="login-with-google-btn" >
     Sign in with Google

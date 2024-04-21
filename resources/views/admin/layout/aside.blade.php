@@ -22,33 +22,26 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link text-white ms-1">Manage Courses</span>
+            <span class="nav-link text-white ms-1">Leads Qualification</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageVideos') }}">
+          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageAttendence') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
             </div>
-            <span class="nav-link text-white ms-1">Manage Videos</span>
+            <span class="nav-link text-white ms-1">Data Order</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageQuiz*') ? 'active' : '' }}" href="{{ route('ManageQuiz') }}">
+          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageEnrollment') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
             </div>
-            <span class="nav-link text-white ms-1">Manage Quiz</span>
+            <span class="nav-link text-white ms-1">Fraud Point</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageEnrollment*') ? 'active' : '' }}" href="{{ route('ManageEnrollment') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Manage Enrollment</span>
-          </a>
-        </li>
+       
 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
@@ -61,14 +54,7 @@
             <span class="nav-link text-white ms-1">Data User</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('DataUser*') ? 'active' : '' }}" href="{{ route('ManageAttendence') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Manage Attendence</span>
-          </a>
-        </li>
+       
 
       </ul>
     </div>

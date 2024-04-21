@@ -24,11 +24,14 @@
                     class="d-flex justify-content-center flex-column w-100 pt-3" method="POST">
                     @csrf
                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="Position">
-
-                        <option value="">Select Position</option>
-                        <option value="trainer">Trainer</option>
-                        <option value="fts">Fts</option>
-                    </select>
+                      <option value="" disabled selected>Select Position</option>
+                      @foreach ($role as $c)
+                          @if ($c->role_name !== 'admin')  <!-- Hide the option if role_name is 'Admin' -->
+                              <option value="{{ $c->role_Id }}">{{ $c->role_name }}</option>
+                          @endif
+                      @endforeach  
+                  </select>
+                  
                     <button class="btn btn-lg btn-block btn-primary" style="background-color: #1E4A58;"
                     type="submit"> Continue</button>
 

@@ -15,6 +15,8 @@ use App\Models\QuestionQuiz;
 use App\Models\Quiz;
 use App\Models\User;
 use App\Models\Videos;
+use App\Models\Region;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
@@ -29,26 +31,39 @@ class PagesController extends Controller
     }
     public function dashboard()
     {
-        if (empty(Auth::user()->role)) {
-            return redirect()->route('SelectPosition')->with('success', 'You`r Not Selected Position Before, Please Select Position');
-        }
+        // if (empty(Auth::user()->role)) {
+        //     return redirect()->route('SelectPosition')->with('success', 'You`r Not Selected Position Before, Please Select Position');
+        // }
 
-        if (Auth::user()->role === 'fts' && empty(Auth::user()->Bisnis_Unit_Id)) {
-            return redirect()->route('SelectUnit')->with('success', 'You`r Not Selected Bisnis Unit Before, Please Select Bisnis Unit');
-        }
+        // if (empty(Auth::user()->Bisnis_Unit_Id)) {
+        //     return redirect()->route('SelectUnit')->with('success', 'You`r Not Selected Bisnis Unit Before, Please Select Position');
+        // }
+
+        // if (empty(Auth::user()->id_region)) {
+        //     return redirect()->route('SelectRegion')->with('success', 'You`r Not Selected Region Before, Please Select Position');
+        // }
 
         return view('admin.dashboard');
     }
+ 
     public function SelectPosition()
     {
         return view('SelectPosition', [
             'users' => User::all(),
+            'role' => Role::all(),
         ]);
     }
     public function SelectUnit()
     {
         return view('SelectUnit', [
             'unit' => BisnisUnit::all(),
+        ]);
+    }
+
+    public function SelectRegion()
+    {
+        return view('SelectRegion', [
+            'Region' => Region::all(),
         ]);
     }
 
@@ -245,7 +260,11 @@ class PagesController extends Controller
     }
     public function DataUser()
     {
-        return view('admin.DataUser');
+        return view('admin.DataUser', [
+            'users' =>  User::all(),
+            //'BisnisUnit' => BisnisUnit::all(),
+            //'Region' => Region::all()
+        ]);
     }
     public function DetailUser()
     {
@@ -255,9 +274,14 @@ class PagesController extends Controller
     {
         return view('admin.User.AddUser');
     }
-    public function EditUser()
+    public function EditUser($id)
     {
-        return view('admin.User.EditUser');
+        return view('admin.User.EditUser',[
+            'users' => User::where('User_Id', $id)->first(),
+            'BisnisUnit' => BisnisUnit::all(),
+            'Region' => Region::all(),
+            //'users' =>  User::all()
+        ]);
     }
     public function ManageAttendence()
     {
@@ -271,4 +295,50 @@ class PagesController extends Controller
     {
         return view('admin.CrudAttendence.EditAttendence');
     }
+
+    //User
+
+    public function HomeUser()
+    {
+        if (empty(Auth::user()->role)) {
+            return redirect()->route('SelectPosition')->with('success', 'You`r Not Selected Position Before, Please Select Position');
+        }
+
+        if (Auth::user()->role === 'fts' && empty(Auth::user()->Bisnis_Unit_Id)) {
+            return redirect()->route('SelectUnit')->with('success', 'You`r Not Selected Bisnis Unit Before, Please Select Bisnis Unit');
+        }
+
+        if (Auth::user()->role === 'fts' && empty(Auth::user()->id_region)) {
+            return redirect()->route('SelectRegion')->with('success', 'You`r Not Selected Bisnis Unit Before, Please Select Bisnis Unit');
+        }
+
+        return view('users.HomeUser', [
+            'CategoryCourses' => CategoryCourses::all(),
+            'Courses' => Courses::all()
+        ]);
+    }
+
+    public function VideosUser()
+    {
+        return view('users.VideosUser', [
+            'courses' => Courses::CoursesByVideo(),
+        ]);
+    }
+
+    public function ShowVideos($courses)
+    {
+        return view('users.Videos.ShowVideos', [
+            'videos' => Videos::VideosByCourses($courses),
+            'courses' => Courses::where('Courses_Title', $courses)->first(),
+        ]);
+    }
+
+    public function DetailVideos($id)
+    {
+        return view('users.Videos.DetailVideos', [
+            'Videos' => Videos::where('Video_Id', $id)->first(),
+        ]);
+    }
+
+  
 }
