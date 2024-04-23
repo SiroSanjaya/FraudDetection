@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $primaryKey = 'User_Id';
+    protected $primaryKey = 'user_id';  // Make sure this matches exactly with your database column name, which seems to be `user_id` based on your logs.
     public $incrementing = true;
     public $timestamps = true;
 
@@ -25,7 +25,7 @@ class User extends Authenticatable
         'username',
         'email',
         'Google_Id',
-        'role',
+        'role_Id',
         'Bisnis_Unit_Id',
         'id_region',
         'password',

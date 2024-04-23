@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -11,57 +10,43 @@ class AuthController extends Controller
 {
     public function redirect()
     {
+        // Redirects to Google's OAuth page
         return Socialite::driver('google')->redirect();
     }
 
     public function callbackGoogle()
-    {
-        try {
-            $google_user = Socialite::driver('google')->user();
-            $user = User::where('Google_Id', $google_user->getId())->first();
+{
+    try {
+        $googleUser = Socialite::driver('google')->user();
+        $user = User::firstOrCreate([
+            'Google_Id' => $googleUser->getId(),
+        ], [
+            'username' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'avatar' => $googleUser->getAvatar(),
+            'role_Id' => 4,  // Assuming '4' is a default role ID
+        ]);
 
-            // if (explode("@", $google_user->email)[1] !== 'widyatama.ac.id') {
-            //     return redirect()->to('login')->with('failed', 'Barudak Widit Hungkul Cuyy, Pake Email Widit Geura');
-            // }
+        Auth::login($user, true);  // 'true' to remember the user
+        \Log::info('Is user authenticated after login? ' . Auth::check());  // Log authentication check
+        \Log::info('User authenticated: ', ['id' => Auth::id()]);  // Log user ID
+        \Log::info('User details', ['user' => $user->toArray()]);
 
-            if (!$user) {
-                $newUser = User::create([
-                    // 'fullname' => explode("/", $google_user->getName())[2],
-                    // 'npm' => explode("/", $google_user->getName())[1],
-                    'username' => $google_user->getName(),
-                    'email' => $google_user->getEmail(),
-                    'Google_Id' => $google_user->getId(),
-                    'avatar' => $google_user->getAvatar(),
-                ]);
-
-                Auth::login($newUser);
-
-                return redirect()->route('SelectPosition');
-            } else {
-                
-                Auth::login($user);
-                
-            //     if (empty($user->role)) {
-            //         return redirect()->route('SelectPosition');
-            //     }else if(empty($user->Bisnis_Unit_Id)){
-            //         return redirect()->route('SelectUnit'); 
-            //     }else if($user->role === 'FTS'){
-            //         return redirect()->route('HomeUser'); 
-            //     }else{
-            //         return redirect()->intended('/');
-            //     }
-             }
-            
-            
-        } catch (\Throwable $th) {
-            dd('Error ' . $th);
+        if (Auth::check()) {
+            \Log::info('Authentication check passed');
+        } else {
+            \Log::info('Authentication check failed');
         }
-    }
+        return redirect()->route('dashboard');
 
+    } catch (\Exception $e) {
+        \Log::error('Failed to authenticate with Google: ' . $e->getMessage());
+        return redirect()->route('login')->withErrors('Failed to authenticate with Google. Please try again.');
+    }
+}
     public function logout()
     {
         Auth::logout();
-
-        return redirect()->route('login')->with('success', 'Successfully Logout');
+        return redirect()->route('login')->with('success', 'You have been successfully logged out.');
     }
 }
