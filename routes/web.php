@@ -6,6 +6,10 @@ use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+//Leads
+use App\Http\Controllers\LeadController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +32,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
+    Route::resource('leads', LeadController::class);
+
+    
 });
 Route::get('/test-auth', function () {
     return auth()->check() ? 'Authenticated' : 'Not authenticated';

@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^40.2.0",
+        "@enso-ui/progress-circle": "^2.0.8",
         "datatables.net-dt": "^2.0.3"
     }
 }

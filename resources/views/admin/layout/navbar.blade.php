@@ -2,7 +2,7 @@
     <div class="container-fluid py-1 px-3">
       <nav aria-label="breadcrumb">
           <h5 class="font-weight-bolder text-black mb-0">Hello {{ Auth::user()->username}}</h5>
-        <h6 class=" text-black active" aria-current="page">Welcome to Dashboard Elearning eFishery</h6>
+        <h6 class=" text-black active" aria-current="page">Welcome to Dashboard eFishery Warden</h6>
 
       </nav>
       <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">

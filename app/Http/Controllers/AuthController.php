@@ -29,6 +29,7 @@ class AuthController extends Controller
 
         Auth::login($user, true);  // 'true' to remember the user
 
+
         ///////////////////////// Debugging Logs
         \Log::info('Is user authenticated after login? ' . Auth::check());  // Log authentication check
         \Log::info('User authenticated: ', ['id' => Auth::id()]);  // Log user ID
