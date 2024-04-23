@@ -28,15 +28,17 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user, true);  // 'true' to remember the user
+
+        ///////////////////////// Debugging Logs
         \Log::info('Is user authenticated after login? ' . Auth::check());  // Log authentication check
         \Log::info('User authenticated: ', ['id' => Auth::id()]);  // Log user ID
         \Log::info('User details', ['user' => $user->toArray()]);
-
         if (Auth::check()) {
             \Log::info('Authentication check passed');
         } else {
             \Log::info('Authentication check failed');
         }
+        ////////////////////////////////////////
         return redirect()->route('dashboard');
 
     } catch (\Exception $e) {
