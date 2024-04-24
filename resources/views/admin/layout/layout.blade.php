@@ -7,8 +7,10 @@
     <link rel="apple-touch-icon" sizes="76x76" href="/images/logo.png">
     <link rel="icon" type="image/png" href="/images/logo.png">
     <title>
-        eFishery Warden - @yield('title')
+        Warden - @yield('title')
     </title>
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
@@ -31,6 +33,8 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
+<script src="{{ mix('js/app.js') }}"></script>
+
     <div class="min-height-300  position-absolute w-100"></div>
     @include('admin.layout.aside')
     <main class="main-content position-relative border-radius-lg ">

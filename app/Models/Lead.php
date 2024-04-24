@@ -53,4 +53,11 @@ class Lead extends Model
         $this->score = $this->calculateScore();  // Call calculateScore to compute the score
         $this->save();  // Save the updated score to the database
     }
+
+    // Model Relationships
+
+    public function survey()
+    {
+        return $this->hasOne(Survey::class);
+    }
 }

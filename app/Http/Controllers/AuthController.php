@@ -27,9 +27,7 @@ class AuthController extends Controller
             'role_Id' => 4,  // Assuming '4' is a default role ID
         ]);
 
-        Auth::login($user, true);  // 'true' to remember the user
-
-
+        Auth::login($user, false);  // 'true' to remember the user
         ///////////////////////// Debugging Logs
         \Log::info('Is user authenticated after login? ' . Auth::check());  // Log authentication check
         \Log::info('User authenticated: ', ['id' => Auth::id()]);  // Log user ID

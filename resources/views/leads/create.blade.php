@@ -1,9 +1,18 @@
-@extends('layout.layout')
+@extends('admin.layout.layout')
 
 @section('content')
 <div class="container">
     <h1>Add New Lead</h1>
-    <form action="{{ route('leads.store') }}" method="POST">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form action="{{ route('leads.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="salutation">Salutation</label>
@@ -67,7 +76,17 @@
                 <option value="Other">Other</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="survey_description">Survey Description</label>
+            <textarea class="form-control" name="survey_description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="survey_images">Survey Images</label>
+            <input type="file" class="form-control" name="survey_images[]" accept="image/*" multiple>
+        </div>
         <button type="submit" class="btn btn-primary">Add Lead</button>
     </form>
 </div>
+
 @endsection

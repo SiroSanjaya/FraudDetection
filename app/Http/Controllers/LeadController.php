@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Lead;
+use App\Models\Survey;
+use App\Models\SurveyImage;
+use Illuminate\Support\Facades\Storage;
 
 class LeadController extends Controller
 {
@@ -30,6 +32,10 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
+        // debug
+        \Log::info($request->all());
+        
+
         $validatedData = $request->validate([
             'salutation' => 'required',
             'first_name' => 'required|max:255',
@@ -43,12 +49,33 @@ class LeadController extends Controller
             'NPWP' => 'nullable|digits_between:1,20',
             'status' => 'required',
             'source' => 'required',
+            'survey_description' => 'required',
+            'survey_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         $lead = Lead::create($validatedData);
-        $lead->updateScore();  // Update score after lead is created
+        $survey = $lead->survey()->create(['description' => $request->input('survey_description')]);
+        
+        // Check if the survey images are uploaded
+        if ($request->hasfile('survey_images')) {
+            foreach ($request->file('survey_images') as $file) {
+                \Log::info("File is valid: " . $file->isValid());
+                \Log::info("File original name: " . $file->getClientOriginalName());
+                \Log::info("File type: " . $file->getClientMimeType());
+                if ($file->isValid()) {
+                    $path = $file->store('surveys', 'public');
+                    $survey->images()->create([
+                        'image_path' => Storage::url($path)
+                    ]);
+                } else {
+                    \Log::error("Uploaded file is not valid.");
+                    return back()->withErrors('Uploaded file is not valid.');
+                }
+            }
+        }
+        \Log::info($request->hasFile('survey_images'));
 
-        return redirect()->route('leads.index')->with('success', 'Lead added successfully!');
+        $lead->updateScore();  // Update score after lead is created
+        return redirect()->route('leads.index')->with('success', 'Lead and Survey created successfully.');
     }
 
     /**
@@ -56,10 +83,14 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        $lead = Lead::findOrFail($id);
+        // Fetch the lead along with the related survey and survey images
+        $lead = Lead::with(['survey.images'])->findOrFail($id);
         $leadScore = $lead->score; // Retrieve the lead's score
+    
+        // Pass the lead and leadScore to the view
         return view('leads.show', compact('lead', 'leadScore'));
     }
+    
     
 
     /**
