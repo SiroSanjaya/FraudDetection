@@ -2,24 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role as SpatieRole;
 
-class Role extends Model
+class Role extends SpatieRole
 {
-    use HasFactory;
-
-        /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $table = 'role';
-     protected $primaryKey = 'role_Id';
-    public $incrementing = true;
-    public $timestamps = false;
-
-    protected $fillable = [
-        'role_name',
-    ];
+    // Your customizations (if any)
 }

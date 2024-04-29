@@ -9,63 +9,20 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+            <li class="nav-item">
+        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('dashboard') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link text-white ms-1">Dashboard</span>
-          </a>
-        </li>
-        <!-- Leads Qualification -->
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('leads*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
-                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
-                <span class="nav-link text-white ms-1">Leads Qualification</span>
-            </a>
-        </li>
-
-        
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageAttendence') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Data Order</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageEnrollment') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Fraud Point</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('ManageVideos*') ? 'active' : '' }}" href="{{ route('ManageQuiz') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Fraud Point Activity</span>
-          </a>
-        </li>
-
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('DataUser*') ? 'active' : '' }}" href="{{ route('DataUser') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link text-white ms-1">Data User</span>
-          </a>
-        </li>
-       
-
+        </a>
+    </li>
+    @role('admin')
+    @include('admin.layout.navbar.admin_user')
+    @endrole
+    @role('salesManager')
+    @include('admin.layout.navbar.salesManager_user')
+    @endrole
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">

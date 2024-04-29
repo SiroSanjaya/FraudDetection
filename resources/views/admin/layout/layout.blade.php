@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
     <link href="/css/custom.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -42,6 +44,16 @@
         @include('admin.layout.navbar')
         <!-- End Navbar -->
         <div class="container-fluid py-4">
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
             @yield('content')
             @include('admin.layout.footer')
         </div>
@@ -161,6 +173,7 @@
     <script src="/js/moment-with-locales.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/main.js"></script>
+
 
 
 </body>

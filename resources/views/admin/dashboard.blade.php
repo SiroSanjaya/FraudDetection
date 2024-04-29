@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Data Courses</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Incoming Leads</p>
                                 <h5 class="font-weight-bolder">
                                     250
                                 </h5>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Data Videos</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Qualified Leads</p>
                                 <h5 class="font-weight-bolder">
                                     120
                                 </h5>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Data Quiz</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">In Shipping</p>
                                 <h5 class="font-weight-bolder">
                                     50
                                 </h5>
@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Data Users</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Confirmed Delivery</p>
                                 <h5 class="font-weight-bolder">
                                     75
                                 </h5>

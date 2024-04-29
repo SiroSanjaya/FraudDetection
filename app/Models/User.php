@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasRoles, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +32,9 @@ class User extends Authenticatable
         'id_region',
         'password',
         'avatar',
+        'token',           // Added to store the OAuth access token
+        'refresh_token',   // Added to store the OAuth refresh token
+        'token_expires_at' // Added to store the expiration time of the access token
     ];
 
     /**
@@ -51,16 +56,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function enroll()
-    {
-        return $this->hasMany(Enroll::class, 'User_Id', 'User_Id');
-    }
-
-    // Define the relationship with BisnisUnit model
-    public function BisnisUnit()
-    {
-        return $this->belongsTo(BisnisUnit::class, 'Bisnis_Unit_Id', 'Bisnis_Unit_Id');
-    }
 
     
 }

@@ -10,7 +10,7 @@
         
         <div class="form-group">
             <label for="salutation">Salutation:</label>
-            <select class="form-control" name="salutation">
+            <select class="form-control" name="salutation" required>
                 <option value="Bapak" {{ $lead->salutation == 'Bapak' ? 'selected' : '' }}>Bapak</option>
                 <option value="Ibu" {{ $lead->salutation == 'Ibu' ? 'selected' : '' }}>Ibu</option>
             </select>
@@ -63,7 +63,7 @@
 
         <div class="form-group">
             <label for="status">Status:</label>
-            <select class="form-control" name="status">
+            <select class="form-control" name="status" required>
                 <option value="open" {{ $lead->status == 'open' ? 'selected' : '' }}>Open</option>
                 <option value="contacted" {{ $lead->status == 'contacted' ? 'selected' : '' }}>Contacted</option>
                 <option value="qualified" {{ $lead->status == 'qualified' ? 'selected' : '' }}>Qualified</option>
@@ -73,7 +73,7 @@
 
         <div class="form-group">
             <label for="source">Source:</label>
-            <select class="form-control" name="source">
+            <select class="form-control" name="source" required>
                 <option value="Advertisement" {{ $lead->source == 'Advertisement' ? 'selected' : '' }}>Advertisement</option>
                 <option value="Web" {{ $lead->source == 'Web' ? 'selected' : '' }}>Web</option>
                 <option value="Word of Mouth" {{ $lead->source == 'Word of Mouth' ? 'selected' : '' }}>Word of Mouth</option>

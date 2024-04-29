@@ -8,7 +8,7 @@ class Lead extends Model
 {
     protected $fillable = [
         'salutation', 'first_name', 'last_name', 'email', 'phone_number',
-        'kota', 'provinsi', 'address', 'NIK', 'NPWP', 'status', 'source', 'created_by', 'score'
+        'kota', 'provinsi', 'address', 'NIK', 'NPWP', 'status', 'source', 'created_by', 'score', 'unqualifiedReason',
     ];
 
     /**
@@ -60,4 +60,6 @@ class Lead extends Model
     {
         return $this->hasOne(Survey::class);
     }
+
+
 }
