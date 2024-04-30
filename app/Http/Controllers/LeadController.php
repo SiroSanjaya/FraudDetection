@@ -185,6 +185,8 @@ class LeadController extends Controller
              $customerData['name'] = $lead->first_name . ' ' . $lead->last_name; // Assuming you want a full name in one column for Customer
              $customerData['assigned_to'] = $lead->created_by; // Assign the lead creator as the customer's assigned user
              $customerData['phone'] = $lead->phone_number; // Assuming you want to store the phone number in one column for Customer
+             $customerData['address'] = $lead->address ?? ''; // Assuming you want to store the address in one column for Customer
+             
 
              Customer::create($customerData);
          });

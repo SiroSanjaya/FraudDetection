@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Customer Details: {{ $customer->name }}</h1>
+    <h1>Customer Details</h1>
+    <h2> {{ $customer->name }}</h2>
     <div class="card">
         <div class="card-body">
             <p><strong>Email:</strong> {{ $customer->email }}</p>
@@ -15,6 +16,7 @@
             <!-- Add more fields as necessary -->
 
             <a href="{{ route('customers.index') }}" class="btn btn-secondary">Back to List</a>
+            <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-primary">Edit</a>
         </div>
     </div>
 </div>

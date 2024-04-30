@@ -104,12 +104,15 @@ Route::middleware(['auth','checkrole'])->group(function () {
         Route::post('permissions/store', [RoleController::class, 'storePermission'])->name('permissions.store');
 
         // Customer Management Routes
-    Route::prefix('customers')->name('customers.')->group(function () {
-        Route::get('/index', [CustomerController::class, 'index'])->name('index');
-        Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
+        Route::prefix('customers')->name('customers.')->group(function () {
+            Route::get('/', [CustomerController::class, 'index'])->name('index');
+            Route::get('/{customer_id}', [CustomerController::class, 'show'])->name('show');
+            Route::get('/{customer_id}/edit', [CustomerController::class, 'edit'])->name('edit');
+            Route::put('/{customer_id}', [CustomerController::class, 'update'])->name('update');
+            Route::delete('/{customer_id}', [CustomerController::class, 'destroy'])->name('destroy');
+        });
 
-
-    });
+ 
     
 });
 
