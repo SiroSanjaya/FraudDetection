@@ -11,10 +11,10 @@ class AuthController extends Controller
     public function redirect()
     {
         return Socialite::driver('google')
-            ->scopes(['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'https://mail.google.com/'])
-            ->with(['access_type' => 'offline', 'prompt' => 'consent select_account'])
+            ->scopes(['openid', 'profile', 'email'])
             ->redirect();
     }
+    
 
     public function callbackGoogle()
     {

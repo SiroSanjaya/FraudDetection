@@ -37,37 +37,83 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+Route::prefix('DataOrder')->group(function () {
+    Route::get('/', [PagesController::class, 'DataOrder'])->name('DataOrder');
+    Route::get('/AddAttendence', [PagesController::class, 'AddAttendence'])->name('AddAttendence');
+    Route::get('/EditAttendence', [PagesController::class, 'EditAttendence'])->name('EditAttendence');
+});
+Route::prefix('DeliveryOrder')->group(function () {
+    Route::get('/', [PagesController::class, 'DeliveryOrder'])->name('DeliveryOrder');
+    Route::get('/DetailOrder/{orderId}', [PagesController::class, 'DetailOrder'])->name('DetailOrder');
+    Route::post('/assign-driver', [CRUDController::class, 'assignDriver'])->name('assign.driver');
+    Route::get('/DetailDelivery/{orderId}', [PagesController::class, 'DetailDelivery'])->name('DetailDelivery');
+    Route::post('/acceptOrder/{orderId}', [CrudController::class, 'acceptOrder'])->name('acceptOrder');
+    Route::post('/finishDelivery/{orderId}', [CrudController::class, 'finishDelivery'])->name('finishDelivery');
+
+});
+Route::get('', [PagesController::class, 'dashboard'])->name('dashboard');
+Route::get('/SelectPosition', [PagesController::class, 'SelectPosition'])->name('SelectPosition');
+Route::post('/SelectedPosition', [CrudController::class, 'SelectedPosition'])->name('SelectedPosition');
+Route::get('/SelectUnit', [PagesController::class, 'SelectUnit'])->name('SelectUnit');
+Route::post('/SelectedUnit', [CrudController::class, 'SelectedUnit'])->name('SelectedUnit');
+Route::get('/SelectRegion', [PagesController::class, 'SelectRegion'])->name('SelectRegion');
+Route::post('/SelectedRegion', [CrudController::class, 'SelectedRegion'])->name('SelectedRegion');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+Route::prefix('Point')->group(function () {
+    Route::get('/', [PagesController::class, 'Point'])->name('Point');
+    Route::get('/PointActivity', [PagesController::class, 'PointActivity'])->name('PointActivity');
+    Route::get('/PointDetail/{orderId}', [PagesController::class, 'PointDetail'])->name('PointDetail');
+    Route::get('/AddPointActivity/{orderId}', [PagesController::class, 'AddPointActivity'])->name('AddPointActivity');
+    Route::post('/submit-activity', [CRUDController::class, 'processActivityForm'])->name('processActivityForm');
+});
+
+Route::prefix('DataUser')->group(function () {
+    Route::get('/', [PagesController::class, 'DataUser'])->name('DataUser');
+    Route::get('/DetailUser', [PagesController::class, 'DetailUser'])->name('DetailUser');
+    Route::get('/AddUser', [PagesController::class, 'AddUser'])->name('AddUser');
+    Route::get('/EditUser/{id}', [PagesController::class, 'EditUser'])->name('EditUser');
+    Route::post('/EditedUser/{id}', [CrudController::class, 'EditedUser'])->name('EditedUser');
+    Route::get('/DeletedUser/{id}', [CrudController::class, 'DeletedUser'])->name('DeletedUser');
+});
+
 // Authenticated Routes
 Route::middleware(['auth','checkrole'])->group(function () {
-    Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
-    Route::resource('leads', LeadController::class);
+        Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
+        Route::resource('leads', LeadController::class);
 
-    // Leads Management
-    Route::post('/leads/{lead}/approve', [LeadController::class, 'approve'])->name('leads.approve');
-    Route::post('/leads/{lead}/disapprove', [LeadController::class, 'disapprove'])->name('leads.disapprove');
-    Route::get('/lead-approvals', [LeadController::class, 'approvalIndex'])->name('lead.approvals.index');
+        // Leads Management
+        Route::post('/leads/{lead}/approve', [LeadController::class, 'approve'])->name('leads.approve');
+        Route::post('/leads/{lead}/disapprove', [LeadController::class, 'disapprove'])->name('leads.disapprove');
+        Route::get('/lead-approvals', [LeadController::class, 'approvalIndex'])->name('lead.approvals.index');
+        
+
+        // User management
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        // Permissions and Roles
+        Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/roles/{id}/edit-permissions', [RoleController::class, 'editPermissions'])->name('roles.edit_permissions');
+        Route::put('/roles/{id}/update-permissions', [RoleController::class, 'updatePermissions'])->name('roles.update_permissions');
+        Route::get('permissions/create', [RoleController::class, 'createPermission'])->name('permissions.create');
+        Route::post('permissions/store', [RoleController::class, 'storePermission'])->name('permissions.store');
+
+        // Customer Management Routes
+    Route::prefix('customers')->name('customers.')->group(function () {
+        Route::get('/index', [CustomerController::class, 'index'])->name('index');
+        Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
+
+
+    });
     
-
-    // User management
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
-    // Permissions and Roles
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('/roles/{id}/edit-permissions', [RoleController::class, 'editPermissions'])->name('roles.edit_permissions');
-    Route::put('/roles/{id}/update-permissions', [RoleController::class, 'updatePermissions'])->name('roles.update_permissions');
-    Route::get('permissions/create', [RoleController::class, 'createPermission'])->name('permissions.create');
-    Route::post('permissions/store', [RoleController::class, 'storePermission'])->name('permissions.store');
-
-    // Customer Management Routes
-Route::prefix('customers')->name('customers.')->group(function () {
-    Route::get('/', [CustomerController::class, 'index'])->name('index');
-    Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
 });
 
-});
+
 
 // Admin specific routes
 Route::middleware(['auth', 'role:admin'])->group(function () {

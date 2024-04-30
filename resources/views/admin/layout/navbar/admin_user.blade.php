@@ -16,8 +16,6 @@
         </ul>
     </div>
 </li>
-
-
 <!-- Leads Management Dropdown converted to Collapse for Bootstrap 5 -->
 <li class="nav-item">
     <a class="nav-link {{ request()->is('leads*') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#leadsManagementCollapse" aria-expanded="false" aria-controls="leadsManagementCollapse">
@@ -48,4 +46,35 @@
         </ul>
     </div>
 </li>
-    
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('DataOrder*') ? 'active' : '' }}" href="{{ route('DataOrder') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Data Order</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('DeliveryOrder*') ? 'active' : '' }}" href="{{ route('DeliveryOrder') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Delivery Order</span>
+    </a>
+</li>  
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('PointActivity*') ? 'active' : '' }}" href="{{ route('PointActivity') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Fraud Point</span>
+    </a>
+</li>
+{{-- <li class="nav-item">
+    <a class="nav-link {{ request()->is('PointActivity*') ? 'active' : '' }}" href="{{ route('PointActivity') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Fraud Point Activity</span>
+    </a>
+</li> --}}

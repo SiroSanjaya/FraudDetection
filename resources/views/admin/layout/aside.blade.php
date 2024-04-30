@@ -20,9 +20,11 @@
     @role('admin')
     @include('admin.layout.navbar.admin_user')
     @endrole
+
     @role('salesManager')
     @include('admin.layout.navbar.salesManager_user')
     @endrole
+    
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">

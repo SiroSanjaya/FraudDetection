@@ -16,6 +16,9 @@ use App\Models\Quiz;
 use App\Models\User;
 use App\Models\Videos;
 use App\Models\Region;
+use App\Models\OrderItem;
+use App\Models\Order;
+use App\Models\Shipment;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +48,7 @@ class PagesController extends Controller
 
         return view('admin.dashboard');
     }
- 
+
     public function SelectPosition()
     {
         return view('SelectPosition', [
@@ -67,197 +70,110 @@ class PagesController extends Controller
         ]);
     }
 
-    // Manage Courses
-    public function ManageCourses()
+
+
+
+
+
+    // Delivery Order
+    public function DataOrder()
     {
-        return view('admin.ManageCourses', [
-            'CategoryCourses' => CategoryCourses::all(),
-        ]);
-    }
-    public function AddCategoryCourses()
-    {
-        return view('admin.Courses.AddCategoryCourses', [
-            'BisnisUnit' => BisnisUnit::all()
-        ]);
-    }
-    public function EditCategoryCourses($id)
-    {
-        return view('admin.Courses.EditCategoryCourses', [
-            'CategoryCourses' => CategoryCourses::where('Category_Id', $id)->first(),
-            'BisnisUnit' => BisnisUnit::all()
+        $pendingOrders = Order::whereNull('user_id')->get();
+        $createdOrders = Order::whereNotNull('user_id')->get();
+        $shippedOrders = Order::where('status', 'shipped')->get();
+        $deliveredOrders = Order::where('status', 'delivered')->get();
+        return view('admin.DataOrder', [
+            'orders' => Order::all(),
+            'pendingOrders' => $pendingOrders,
+            'createdOrders' => $createdOrders,
+            'shippedOrders' => $shippedOrders,
+            'deliveredOrders' => $deliveredOrders
         ]);
     }
 
-    // Courses
-    public function Courses($category)
+
+    public function DeliveryOrder()
     {
-        return view('admin.Courses.Courses', [
-            'CategoryCourses' => CategoryCourses::where('Category_Name', $category)->first(),
-            'courses' => Courses::all()
-        ]);
-    }
-    public function AddCourses($category)
-    {
-        return view('admin.Courses.AddCourses', [
-            'CategoryCourses' => CategoryCourses::where('Category_Name', $category)->first(),
-        ]);
-    }
-    public function EditCourses($category, $id)
-    {
-        return view('admin.Courses.EditCourses', [
-            'courses' => Courses::where('Courses_Id', $id)->first(),
-            'CategoryCourses' => CategoryCourses::where('Category_Name', $category)->first()
-        ]);
+        $userId = Auth::id(); // Fetch the authenticated user's ID
+        $orders = Order::where('user_id', $userId)->get(); // Fetch orders assigned to the logged-in user
+        $orders = Order::with('shipment.user')->where('user_id', $userId)->get();
+        $pendingOrders = Order::with('shipment.user')->where('user_id', $userId)->where('status', 'pending')->get();
+        $shippedOrders = Order::with('shipment.user')->where('user_id', $userId)->where('status', 'shipped')->get();
+        $deliveredOrders = Order::with('shipment.user')->where('user_id', $userId)->where('status', 'delivered')->get();
+
+        return view('admin.DeliveryOrder', compact('pendingOrders', 'shippedOrders', 'deliveredOrders'));
     }
 
-    // Category Video
-    public function ManageVideos()
+    public function DetailOrder($orderId)
     {
-        return view('admin.ManageVideos', [
-            'courses' => Courses::CoursesByVideo(),
-        ]);
-    }
-    public function AddVideos()
-    {
-        return view('admin.CrudVideos.AddVideos', [
-            'courses' => Courses::all(),
-        ]);
+        $order = Order::with(['customer', 'items'])->findOrFail($orderId);
+        $users = User::all();
+
+        // Mengambil satu shipment yang terkait dengan order_id tertentu
+        $shipment = Shipment::with(['user', 'point', 'order'])
+                             ->where('order_id', $orderId)
+                             ->first();
+
+        // Pastikan untuk mengirim $shipment ke view
+        return view('admin.CrudDelivery.DetailOrder', compact('order', 'users', 'shipment'));
     }
 
-    // Detail Video
-    public function VideoDetail($courses)
+
+    public function DetailDelivery($orderId)
     {
-        return view('admin.CrudVideos.VideoDetail', [
-            'videos' => Videos::VideosByCourses($courses),
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-        ]);
-    }
-    public function AddVideoDetail($courses)
-    {
-        return view('admin.CrudVideos.AddVideoDetail', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-        ]);
-    }
-    public function EditVideoDetail($courses, $id)
-    {
-        return view('admin.CrudVideos.EditVideosDetail', [
-            'videos' => Videos::where('Video_Id', $id)->first(),
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'allcourses' => Courses::all(),
-        ]);
+        $order = Order::with(['customer', 'items'])->findOrFail($orderId);
+        $users = User::all();
+
+        // Mengambil satu shipment yang terkait dengan order_id tertentu
+        $shipment = Shipment::with(['user', 'point', 'order'])
+                             ->where('order_id', $orderId)
+                             ->first();
+
+        // Pastikan untuk mengirim data ini ke view
+        return view('admin.CrudDelivery.DetailDelivery', compact('order', 'users', 'shipment'));
     }
 
-    // Manage Quiz
-    public function ManageQuiz()
+
+// Point
+public function Point()
+{
+    return view('admin.Point');
+}
+public function PointActivity()
+{
+    $userId = Auth::id(); // Mengambil ID user yang sedang login
+
+    // Mengambil orders yang 'delivered' dan user_id di shipment sesuai dengan user yang login
+    $orders = Order::with(['shipment.user'])
+        ->whereHas('shipment', function ($query) use ($userId) {
+            $query->where('user_id', $userId); // Filter shipment berdasarkan user_id
+        })
+        ->where('status', 'delivered') // Hanya ambil yang statusnya 'delivered'
+        ->get();
+
+    return view('admin.PointActivity', compact('orders'));
+}
+
+    public function PointDetail($orderId)
     {
-        return view('admin.ManageQuiz', [
-            'courses' => Courses::CoursesByQuiz(),
-        ]);
+        $order = Order::with(['customer', 'items'])->findOrFail($orderId);
+        $users = User::all();
+
+        // Mengambil satu shipment yang terkait dengan order_id tertentu
+        $shipment = Shipment::with(['user', 'point', 'order'])
+                             ->where('order_id', $orderId)
+                             ->first();
+        return view('admin.CrudPoint.PointDetail', compact('order', 'users', 'shipment'));
     }
-    public function AddQuiz()
+    public function AddPointActivity($orderId)
     {
-        return view('admin.CrudQuiz.AddQuiz', [
-            'courses' => Courses::all()
-        ]);
+        $order = Order::with('user')->findOrFail($orderId);
+
+        // Kirim data order ke view, yang juga mengandung data user
+        return view('admin.CrudPoint.AddPointActivity', compact('order'));
     }
 
-    // Quiz
-    public function Quiz($courses)
-    {
-        return view('admin.CrudQuiz.Quiz', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'quiz' => Quiz::where('Courses_Id', Courses::where('Courses_Title', $courses)->first()->Courses_Id)->get(),
-        ]);
-    }
-    public function AddQuizDetail($courses)
-    {
-        return view('admin.CrudQuiz.AddQuizDetail', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-        ]);
-    }
-    public function EditQuiz($courses, $id)
-    {
-        return view('admin.CrudQuiz.EditQuiz', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'allcourses' => Courses::all(),
-            'quiz' => Quiz::where('Quiz_Id', $id)->first()
-        ]);
-    }
 
-    // Quiz Detail
-    public function QuizDetail($courses, $id)
-    {
-        return view('admin.CrudQuiz.QuizDetail', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'quiz' => Quiz::where('Quiz_Id', $id)->first(),
-            'question' => QuestionQuiz::GetAllQuiz($id)
-        ]);
-    }
-
-    public function EditQuizDetail($courses, $id, $QuestionID)
-    {
-        return view('admin.CrudQuiz.EditQuizDetail', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'quiz' => Quiz::where('Quiz_Id', $id)->first(),
-            'question' => QuestionQuiz::where('Question_Id', $QuestionID)->first(),
-            'option' => OptionQuestion::where('Question_Id', QuestionQuiz::where('Quiz_Id', $id)->first()->Question_Id)->get(),
-            'answer' => AnswereQuestion::where('Question_Id', QuestionQuiz::where('Quiz_Id', $id)->first()->Question_Id)->first()
-        ]);
-    }
-    public function AddQuestion($courses, $id)
-    {
-        return view('admin.CrudQuiz.AddQuestion', [
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-            'quiz' => Quiz::where('Quiz_Id', $id)->first(),
-        ]);
-    }
-
-    // Manage Enrollment
-    public function ManageEnrollment()
-    {
-        return view('admin.ManageEnrollment', [
-            'enrollment' => Enrollment::DataEnrollment(),
-            'certificate' => Certificate::all()
-        ]);
-    }
-    public function AddEnrollment()
-    {
-        return view('admin.Enrollment.AddEnrollment', [
-            'CategoryCourses' => CategoryCourses::all()
-        ]);
-    }
-    public function EditEnrollment($id)
-    {
-        return view('admin.Enrollment.EditEnrollment', [
-            'enrollment' => Enrollment::where('Enrollment_Id', $id)->first(),
-            'CategoryCourses' => CategoryCourses::all()
-        ]);
-    }
-
-    // Detail Enrollment
-    public function DetailEnrollment($category)
-    {
-        return view('admin.Enrollment.DetailEnrollment', [
-            'enrollment' => Enrollment::where('Enrollment_Title', $category)->first(),
-            'enroll' => Enroll::DataEnroll(),
-        ]);
-    }
-    public function AddDetailEnrollment($category)
-    {
-        return view('admin.Enrollment.AddDetailEnrollment', [
-            'enrollment' => enrollment::where('Enrollment_Title', $category)->first(),
-            'users' => User::all()
-        ]);
-    }
-    public function EditDetailEnrollment($category, $id)
-    {
-        return view('admin.Enrollment.EditDetailEnrollment', [
-            'enrollment' => enrollment::where('Enrollment_Title', $category)->first(),
-            'allenrollment' => enrollment::all(),
-            'enroll' => Enroll::DataEnroll()->where('Enroll_Id', $id)->first(),
-            'users' => User::all()
-        ]);
-    }
     public function DataUser()
     {
         return view('admin.DataUser', [
@@ -266,35 +182,8 @@ class PagesController extends Controller
             //'Region' => Region::all()
         ]);
     }
-    public function DetailUser()
-    {
-        return view('admin.User.DetailUser');
-    }
-    public function AddUser()
-    {
-        return view('admin.User.AddUser');
-    }
-    public function EditUser($id)
-    {
-        return view('admin.User.EditUser',[
-            'users' => User::where('User_Id', $id)->first(),
-            'BisnisUnit' => BisnisUnit::all(),
-            'Region' => Region::all(),
-            //'users' =>  User::all()
-        ]);
-    }
-    public function ManageAttendence()
-    {
-        return view('admin.ManageAttendence');
-    }
-    public function AddAttendence()
-    {
-        return view('admin.CrudAttendence.AddAttendence');
-    }
-    public function EditAttendence()
-    {
-        return view('admin.CrudAttendence.EditAttendence');
-    }
+
+
 
     //User
 
@@ -318,27 +207,6 @@ class PagesController extends Controller
         ]);
     }
 
-    public function VideosUser()
-    {
-        return view('users.VideosUser', [
-            'courses' => Courses::CoursesByVideo(),
-        ]);
-    }
 
-    public function ShowVideos($courses)
-    {
-        return view('users.Videos.ShowVideos', [
-            'videos' => Videos::VideosByCourses($courses),
-            'courses' => Courses::where('Courses_Title', $courses)->first(),
-        ]);
-    }
 
-    public function DetailVideos($id)
-    {
-        return view('users.Videos.DetailVideos', [
-            'Videos' => Videos::where('Video_Id', $id)->first(),
-        ]);
-    }
-
-  
-}
+ }
