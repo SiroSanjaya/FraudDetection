@@ -9,6 +9,10 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OrderController;
+
 
 use App\Mail\TestEmail;
 use Illuminate\Support\Facades\Mail;
@@ -111,6 +115,25 @@ Route::middleware(['auth','checkrole'])->group(function () {
             Route::put('/{customer_id}', [CustomerController::class, 'update'])->name('update');
             Route::delete('/{customer_id}', [CustomerController::class, 'destroy'])->name('destroy');
         });
+
+        // Items and Product
+        Route::resource('products', ProductController::class);
+        Route::resource('items', ItemController::class);
+        Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+        Route::get('items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+        Route::put('items/{item}', [ItemController::class, 'update'])->name('items.update');
+
+        // Route group for orders
+        Route::prefix('orders')->name('orders.')->middleware(['auth'])->group(function () {
+            Route::get('/', [OrderController::class, 'index'])->name('index');  // List all orders
+            Route::get('create', [OrderController::class, 'create'])->name('create');  // Display form to create a new order
+            Route::post('/', [OrderController::class, 'store'])->name('store');  // Store new order
+            Route::get('{order}', [OrderController::class, 'show'])->name('show');  // Display a specific order
+            Route::get('{order}/edit', [OrderController::class, 'edit'])->name('edit');  // Display form to edit an order
+            Route::put('{order}', [OrderController::class, 'update'])->name('update');  // Update order
+            Route::delete('{order}', [OrderController::class, 'destroy'])->name('destroy');  // Delete an order
+        });
+        Route::get('/api/customers/{customer}', [CustomerController::class, 'getDetails']);
 
  
     

@@ -22,6 +22,8 @@ class Order extends Model
         'status',
         'customer_id',
         'point_id',
+        'updated_at',
+        'created_at'
     ];
 
      // Relasi ke Point

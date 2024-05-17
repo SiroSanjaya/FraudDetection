@@ -45,7 +45,36 @@
             <!-- Additional customer-related links can be added here -->
         </ul>
     </div>
+    </li>
+
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('items*') ? 'active' : '' }}" href="{{ route('items.index') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-box-2 text-success text-sm opacity-10"></i> <!-- Changed the icon to represent 'items' -->
+        </div>
+        <span class="nav-link text-white ms-1">Manage Items</span> <!-- Changed the text to reflect the link's purpose -->
+    </a>
 </li>
+<!-- Order Management Dropdown -->
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('orders*') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#orderManagementCollapse" aria-expanded="false" aria-controls="orderManagementCollapse">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-cart text-primary text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Order Management</span>
+    </a>
+    <div class="collapse" id="orderManagementCollapse">
+        <ul class="list-group">
+            <li class="list-group-item"><a href="{{ route('orders.index') }}">View Orders</a></li>
+            <li class="list-group-item"><a href="{{ route('orders.create') }}">Create Order</a></li>
+            <!-- Additional order-related links can be added here -->
+        </ul>
+    </div>
+</li>
+
+
+
+
 <li class="nav-item">
     <a class="nav-link {{ request()->is('DataOrder*') ? 'active' : '' }}" href="{{ route('DataOrder') }}">
         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
