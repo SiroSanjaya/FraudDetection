@@ -9,14 +9,21 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
+use App\Services\OcrService;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
+
 
 class LeadController extends Controller
 {
+    protected $ocrService;
+
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
+    public function __construct(OcrService $ocrService)
     {
+        $this->ocrService = $ocrService;
         $this->middleware('permission:create leads', ['only' => ['create', 'store']]);
         $this->middleware('permission:read leads', ['only' => ['index', 'show']]);
         $this->middleware('permission:update leads', ['only' => ['edit', 'update']]);
@@ -53,10 +60,7 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        // debug
-        Log::info($request->all());
-        
-
+        // Validate input
         $validatedData = $request->validate([
             'salutation' => 'required',
             'first_name' => 'required|max:255',
@@ -73,33 +77,51 @@ class LeadController extends Controller
             'survey_description' => 'required',
             'survey_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        // Add 'created_by' to validated data
-        $validatedData['created_by'] = auth()->id();  // Capture the ID of the currently logged-in user
+    
+        $ocrResultKtp = null;
+        $ocrResultNpwp = null;
+    
+        // Validate KTP and NPWP using OCR if provided
+        if ($request->hasFile('ktp_image')) {
+            $ktpImage = base64_encode(file_get_contents($request->file('ktp_image')->path()));
+            $ocrResultKtp = $this->ocrService->performOcr($ktpImage);
+            if ($ocrResultKtp['status'] !== 'success') {
+                return back()->withErrors(['ktp_image' => 'Failed to validate KTP ID.']);
+            }
+        }
+    
+        if ($request->hasFile('npwp_image')) {
+            $npwpImage = base64_encode(file_get_contents($request->file('npwp_image')->path()));
+            $ocrResultNpwp = $this->ocrService->performOcr($npwpImage);
+            if ($ocrResultNpwp['status'] !== 'success') {
+                return back()->withErrors(['npwp_image' => 'Failed to validate NPWP.']);
+            }
+        }
+    
+        // Proceed with storing lead data
+        $validatedData['created_by'] = auth()->id();
         $lead = Lead::create($validatedData);
         $survey = $lead->survey()->create(['description' => $request->input('survey_description')]);
-        
-        // Check if the survey images are uploaded
-        if ($request->hasfile('survey_images')) {
+    
+        // Handle survey images
+        if ($request->hasFile('survey_images')) {
             foreach ($request->file('survey_images') as $file) {
-                Log::info("File is valid: " . $file->isValid());
-                Log::info("File original name: " . $file->getClientOriginalName());
-                Log::info("File type: " . $file->getClientMimeType());
                 if ($file->isValid()) {
                     $path = $file->store('surveys', 'public');
-                    $survey->images()->create([
-                        'image_path' => Storage::url($path)
-                    ]);
+                    $survey->images()->create(['image_path' => Storage::url($path)]);
                 } else {
-                    Log::error("Uploaded file is not valid.");
                     return back()->withErrors('Uploaded file is not valid.');
                 }
             }
         }
-        Log::info($request->hasFile('survey_images'));
-
-        $lead->updateScore();  // Update score after lead is created
-        return redirect()->route('leads.index')->with('success', 'Lead and Survey created successfully.');
+    
+        $lead->updateScore();
+        return redirect()->route('leads.show', $lead->id)
+                         ->with('success', 'Lead and Survey created successfully.')
+                         ->with('ocrResultKtp', $ocrResultKtp)
+                         ->with('ocrResultNpwp', $ocrResultNpwp);
     }
+
 
     /**
      * Display the specified resource.
@@ -202,8 +224,61 @@ class LeadController extends Controller
  
          return redirect()->route('lead.approvals.index')->with('error', 'Lead has been marked as unqualified.');
      }
-    
 
+     private function generateToken()
+     {
+         $accessKey = 'bd939c5c0c98155d';
+         $secretKey = 'dd7c2578085629f8';
+         $timestamp = round(microtime(true) * 1000); // Current timestamp in milliseconds
+         $signature = hash('sha256', $accessKey . $secretKey . $timestamp);
+ 
+         $response = Http::post('https://api.advance.ai/openapi/auth/ticket/v1/generate-token', [
+             'accessKey' => $accessKey,
+             'timestamp' => $timestamp,
+             'signature' => $signature,
+             'periodSecond' => 3600 // Token validity in seconds
+         ]);
+ 
+         return $response->json();
+     }
+ 
+     // Modify the ocrKtp method to use generateToken
+     public function ocrKtp(Request $request)
+     {
+         $request->validate([
+             'ktp_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+         ]);
+     
+         // Generate token
+         $tokenResponse = $this->generateToken();
+         if ($tokenResponse['code'] !== 'SUCCESS') {
+             return response()->json(['error' => 'Failed to generate access token.'], 500);
+         }
+     
+         $accessToken = $tokenResponse['data']['token'];
+         $imagePath = $request->file('ktp_image')->path();
+     
+         $client = new \GuzzleHttp\Client();
+         try {
+             $response = $client->post('https://api.advance.ai/openapi/face-recognition/v3/ocr-ktp-check', [
+                 'headers' => [
+                     'X-ACCESS-TOKEN' => $accessToken,
+                 ],
+                 'multipart' => [
+                     [
+                         'name' => 'ocrImage',
+                         'contents' => fopen($imagePath, 'r'),
+                         'filename' => $request->file('ktp_image')->getClientOriginalName()
+                     ]
+                 ]
+             ]);
+     
+             $responseData = json_decode($response->getBody()->getContents(), true);
+             return response()->json($responseData);
+         } catch (\Exception $e) {
+             return response()->json(['error' => 'Error processing OCR request.'], 500);
+         }
+     }
 
 
     

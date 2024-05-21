@@ -75,19 +75,25 @@ class PagesController extends Controller
 
 
 
-    // Delivery Order
     public function DataOrder()
     {
-        $pendingOrders = Order::whereNull('user_id')->get();
-        $createdOrders = Order::whereNotNull('user_id')->get();
-        $shippedOrders = Order::where('status', 'shipped')->get();
-        $deliveredOrders = Order::where('status', 'delivered')->get();
+        // Fetch all orders with necessary relationships
+        $orders = Order::with(['user', 'customer', 'point'])->get();
+    
+        // Filter orders based on their status
+        $pendingOrders = $orders->where('status', 'pending');
+        $createdOrders = $orders->whereNotNull('user_id');
+        $shippedOrders = $orders->where('status', 'shipped');
+        $deliveredOrders = $orders->where('status', 'delivered');
+        $drivers = User::role('driver')->get();  // Assuming you are using a package like spatie/laravel-permission
+    
         return view('admin.DataOrder', [
-            'orders' => Order::all(),
+            'orders' => $orders,
             'pendingOrders' => $pendingOrders,
             'createdOrders' => $createdOrders,
             'shippedOrders' => $shippedOrders,
-            'deliveredOrders' => $deliveredOrders
+            'deliveredOrders' => $deliveredOrders,
+            'drivers' => $drivers
         ]);
     }
 
@@ -107,7 +113,7 @@ class PagesController extends Controller
     public function DetailOrder($orderId)
     {
         $order = Order::with(['customer', 'items'])->findOrFail($orderId);
-        $users = User::all();
+        $users = User::role('driver')->get();
 
         // Mengambil satu shipment yang terkait dengan order_id tertentu
         $shipment = Shipment::with(['user', 'point', 'order'])

@@ -64,7 +64,7 @@
                     <td>{{ $order->point->point_name ?? 'No Point' }}</td>
                     <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
                     <td>{{ $order->getTotalQuantityAttribute() }}</td>
-                    <td>{{ $order->driver->username ?? 'Not Assigned' }}</td>
+                    <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
                     <td>
                         <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                     </td>
@@ -98,7 +98,7 @@
                     <td>{{ $order->point->point_name ?? 'No Point' }}</td>
                     <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
                     <td>{{ $order->getTotalQuantityAttribute() }}</td>
-                    <td>{{ $order->user_id->username ?? 'Not Assigned' }}</td>
+                    <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
                     <td>
                         <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                     </td>
@@ -131,7 +131,7 @@
                                             <td>{{ $order->point->point_name ?? 'No Point' }}</td>
                                             <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
                                             <td>{{ $order->getTotalQuantityAttribute() }}</td>
-                                            <td>{{ $order->driver->username ?? 'Not Assigned' }}</td>
+                                            <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
                                             <td>
                                                 <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                                             </td>
@@ -163,7 +163,7 @@
                                             <td>{{ $order->point->point_name ?? 'No Point' }}</td>
                                             <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
                                             <td>{{ $order->getTotalQuantityAttribute() }}</td>
-                                            <td>{{ $order->driver->username ?? 'Not Assigned' }}</td>
+                                            <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
                                             <td>
                                                 <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                                             </td>

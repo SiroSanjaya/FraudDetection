@@ -31,7 +31,12 @@
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- JS --}}
+    <script src="/js/script.js"></script>
     <script src="/js/jquery.min.js"></script>
+    <script src="/js/rome.js"></script>
+    <script src="/js/moment-with-locales.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+    
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
