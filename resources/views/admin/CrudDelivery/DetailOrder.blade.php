@@ -102,7 +102,7 @@
                                       <ul class="list-group">
                                         <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                           <div class="d-flex align-items-center">
-                                            <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
+                                            <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
                                             <div class="d-flex flex-column">
                                               <h6 class="mb-1 text-dark text-sm">Activity Type</h6>
                                               <span class="text-xs">Feeder Delivery</span>
@@ -111,6 +111,27 @@
                                           </div>
 
                                         </li>
+                                    </li>
+                                    <ul class="list-group">
+                                      <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                        <div class="d-flex align-items-center">
+                                          <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
+                                          <div class="d-flex flex-column">
+                                            <h6 class="mb-1 text-dark text-sm">Activity Detail</h6>
+                                            @if ($order->status === 'Completed' && $fraudReport)
+                                            <a href="{{ route('DetailFraud', ['orderId' => $fraudReport->order_id]) }}" class="details-btn" style="color: blue; text-decoration: underline;">
+                                                Details
+                                            </a>
+                                        @else
+                                            <span class="details-btn disabled">
+                                                No Fraud Report
+                                            </span>
+                                        @endif
+
+                                          </div>
+                                        </div>
+
+                                      </li>
                                         <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                           <div class="d-flex align-items-center">
                                             <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
@@ -122,26 +143,29 @@
                                         </li>
                                       </ul>
                                       <ul class="list-group">
+                                        <h6 class="mb-1 text-dark text-sm">Driver PIC</h6>
                                         <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                                          <div class="d-flex align-items-center">
-                                            <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                                            <form action="{{ route('assign.driver') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="order_id" value="{{ $order->order_id }}">
-                                                <select class="form-select" name="assigned_user_id">
-                                                    <option value="">Select a User</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->user_id }}">{{ $user->username }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <button type="submit" class="btn btn-outline-success btn-sm mb-0"  onclick="showAcceptedConfirmation(event)">Assign Driver</button>
-                                            </form>
-
-
-
-
+                                            <div class="d-flex align-items-center">
+                                                @if($order->status === 'Pending' && is_null($order->user_id))
+                                                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                                                    <form action="{{ route('assign.driver') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="order_id" value="{{ $order->order_id }}">
+                                                        <select class="form-select" name="assigned_user_id">
+                                                            <option value="">Select a User</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->user_id }}">{{ $user->username }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <button type="submit" class="btn btn-outline-success btn-sm mb-0"  onclick="showAcceptedConfirmation(event)">Assign Driver</button>
+                                                    </form>
+                                                @else
+                                                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center" disabled><i class="fas fa-arrow-up"></i></button>
+                                                    <span>{{ $order->user->username }}</span> <!-- Menampilkan nama user yang telah di-assign -->
+                                                @endif
                                             </div>
-                                          </div>
+                                        </li>
+                                    </ul>
 
                                     </div>
                                   </div>
@@ -217,5 +241,9 @@
         form.querySelector('button[type="submit"]').disabled = true; // Disable the submit button
     }
     </script>
+
+
+
+
 
 @endsection

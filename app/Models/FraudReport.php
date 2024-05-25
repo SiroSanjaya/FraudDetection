@@ -11,7 +11,7 @@ class FraudReport extends Model
 
     // Tentukan nama tabel yang terkait dengan model
     protected $table = 'FraudReports';
-    protected $primaryKey = 'report_report_id';
+    protected $primaryKey = 'fraud_report_id';
 
     // Tentukan kolom-kolom yang bisa diisi (mass assignable attributes)
     protected $fillable = [
@@ -22,6 +22,7 @@ class FraudReport extends Model
         'serial_number',
         'location_map',
         'status',
+        'point_name',
         'photo_path'
     ];
 
@@ -31,5 +32,14 @@ class FraudReport extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'order_id');
+    }
+    public function fraudReportItems()
+    {
+        return $this->hasMany(FraudReportItem::class, 'fraud_report_id', 'fraud_report_id');
     }
 }

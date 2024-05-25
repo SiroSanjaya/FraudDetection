@@ -20,6 +20,8 @@ use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Shipment;
 use App\Models\FraudReport;
+use App\Models\FraudReportItem;
+use App\Models\Point;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 class CrudController extends Controller
@@ -86,82 +88,141 @@ public function finishDelivery($orderId)
     return redirect()->route('DeliveryOrder')->with('success', 'Delivery has been finished successfully.');
 }
 
+public function cancelOrder(Request $request, $orderId)
+{
+    $order = Order::find($orderId);
+    if ($order && $order->status == 'Pending') {
+        $order->user_id = null;
+        $order->save();
+        return redirect()->route('DeliveryOrder')->with('error', 'Order could not be cancelled.');
+    }
+
+    return redirect()->route('DeliveryOrder')->with('error', 'Order could not be cancelled.');
+}
+
+
 public function processActivityForm(Request $request) {
+    // Ambil order sesuai dengan order_id yang diberikan di request
     $order = Order::with('items')->where('order_id', $request->input('order_id'))->firstOrFail();
 
-    $isFraudulent = false; // Assume the data is correct
+    // Flag untuk menandai jika ada kecurangan
+    $isFraudulent = false;
 
-    // Iterate through order items to check for mismatches
-    foreach ($order->items as $item) {
-        if ($item->serial_number != $request->input('serial_number') || $item->cobox_id != $request->input('cobox_id')) {
+    // Ambil items dari request
+    $requestItems = $request->input('items');
+
+    // Iterasi melalui item-item pesanan untuk memeriksa kecurangan
+    foreach ($order->items as $index => $item) {
+        // Ambil serial_number dan cobox_id dari request untuk item saat ini
+        $requestSerialNumber = $requestItems[$index]['serial_number'] ?? null;
+        $requestCoboxId = $requestItems[$index]['cobox_id'] ?? null;
+
+        // Periksa apakah serial_number atau cobox_id tidak sesuai
+        if ($item->serial_number != $requestSerialNumber || $item->cobox_id != $requestCoboxId) {
             $isFraudulent = true;
             break;
         }
     }
 
+    // Validasi tambahan untuk memeriksa apakah location_map sama dengan location_map dari point_name
+    if ($request->input('location_map') !== $request->input('point_name')) {
+        $isFraudulent = true;
+    }
+
+    // Tentukan status berdasarkan hasil pemeriksaan kecurangan
     $status = $isFraudulent ? 'fraud' : 'verified';
 
-    // Record the fraud report
-    $fraudReport = new FraudReport([
-        'order_id' => $order->id,
+    // Cek apakah customer_name sudah ada dalam request, jika tidak kosong, gunakan nilainya, jika kosong, tetapkan null
+    $customerName = $request->input('customer_name', null);
+    $point_name = $request->input('point_name');
+
+    // Simpan laporan kecurangan beserta informasi lainnya
+    $fraudReport = FraudReport::create([
+        'order_id' => $order->order_id,
         'user_id' => auth()->id(),
-        'customer_name' => $order->customer_name,
-        'cobox_id' => $request->input('cobox_id'),
-        'serial_number' => $request->input('serial_number'),
+        'customer_name' => $customerName,
         'location_map' => $request->input('location_map'),
         'status' => $status,
+        'point_name' => $point_name,
         'photo_path' => $request->file('photo')->store('public/fraud_reports')
     ]);
-    $fraudReport->save();
 
+    // Update status pesanan menjadi 'done' terlepas dari apakah ada kecurangan atau tidak
+    $order->update(['status' => 'Completed']);
+
+    // Periksa apakah $fraudReport telah dibuat dengan benar
+    if ($fraudReport) {
+        // Simpan item cobox_id dan serial_number ke tabel FraudReportItems
+        foreach ($requestItems as $item) {
+            FraudReportItem::create([
+                'fraud_report_id' => $fraudReport->fraud_report_id, // Menggunakan id dari $fraudReport
+                'cobox_id' => $item['cobox_id'],
+                'serial_number' => $item['serial_number']
+            ]);
+        }
+    }
+
+    // Redirect ke halaman PointActivity dengan status
     return redirect()->route('PointActivity')->with('status', $status);
 }
 
 
-    public function SelectedRegion(Request $request)
-    {
-        $request->validate([
-            'Region' => 'required',
-        ]);
+public function CreatePoint(Request $request)
+{
+    // Validasi data yang dikirim dari formulir
+    $validatedData = $request->validate([
+        'point_name' => 'required|string',
+        'location' => 'required|string',
+        // Jika ada field lain, tambahkan di sini
+    ]);
 
-        $data = [
-            'id_region' => $request->Region,
-        ];
+    // Lakukan sesuatu dengan data yang diterima, seperti menyimpannya ke database
+    $point = new Point();
+    $point->point_name = $request->input('point_name');
+    $point->location = $request->input('location');
+    // Lakukan operasi lain yang diperlukan, misalnya validasi lebih lanjut, dll.
+    $point->save();
 
-        User::where('user_id', Auth::user()->user_id)->update($data);
+    // Redirect ke halaman yang sesuai atau kembali ke halaman sebelumnya
+    return redirect()->route('DataPoint')->with('success', 'Titik berhasil ditambahkan!');
+}
 
-        return redirect()->route('HomeUser');
+public function UpdatePoint(Request $request, $id)
+{
+    $request->validate([
+        'point_name' => 'required',
+        'location' => 'required',
+    ]);
+
+    $point = Point::find($id);
+    if (!$point) {
+        return redirect()->route('DataPoint')->with('error', 'Point not found.');
     }
 
+    $point->point_name = $request->point_name;
+    $point->location = $request->location;
+    $point->save();
 
-    //Users
-    public function EditedUser(Request $request,  $id)
-    {
-        //$request->validate([
-            //'Users' => 'required',
-            //'username' => 'required',
-            //'role' => 'required',
-            //'Bisnis_Unit_Id' => 'required',
-            //'id_region' => 'required',
-        //]);
+    return redirect()->route('DataPoint')->with('success', 'Point updated successfully.');
+}
 
-        $data = [
-            'username' => $request->username,
-            'Bisnis_Unit_Id' => $request->BisnisUnit,
-            'role' => $request->Role,
-            'id_region' => $request->Region,
-        ];
+public function delete($id)
+{
+    $point = Point::find($id);
 
-        User::where('user_id', $id)->update($data);
-
-        return redirect()->route('DataUser')->with('success', 'Succesfully Edit Category');
-
+    if (!$point) {
+        return redirect()->route('DataPoint')->with('error', 'Titik tidak ditemukan.');
     }
 
-    public function DeletedUser($id)
-    {
-        User::destroy($id);
+    $point->delete();
 
-        return redirect()->route('DataUser')->with('success', 'Succesfully Delete Enrollment');
-    }
+    return redirect()->route('DataPoint')->with('success', 'Titik berhasil dihapus.');
+}
+
+public function searchOrders(Request $request)
+{
+    
+    $search = $request->input('search');
+    // Proses pencarian
+}
 }

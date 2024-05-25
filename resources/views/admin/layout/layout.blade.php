@@ -7,10 +7,8 @@
     <link rel="apple-touch-icon" sizes="76x76" href="/images/logo.png">
     <link rel="icon" type="image/png" href="/images/logo.png">
     <title>
-        Warden - @yield('title')
+        Dashboard eFishery Learning
     </title>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
@@ -18,25 +16,27 @@
     <link href="/template/assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Tambahkan di bagian <head> dari dokumen HTML Anda -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="/template/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="/template/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
     <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
     <link href="/css/custom.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- JS --}}
     <script src="/js/jquery.min.js"></script>
+    <script src="./node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-<script src="{{ mix('js/app.js') }}"></script>
-
     <div class="min-height-300  position-absolute w-100"></div>
     @include('admin.layout.aside')
     <main class="main-content position-relative border-radius-lg ">
@@ -44,16 +44,6 @@
         @include('admin.layout.navbar')
         <!-- End Navbar -->
         <div class="container-fluid py-4">
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
-        @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
             @yield('content')
             @include('admin.layout.footer')
         </div>
@@ -61,6 +51,9 @@
     @include('admin.layout.plugin')
 
     <!--   Core JS Files   -->
+    <!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="/template/assets/js/core/popper.min.js"></script>
     <script src="/template/assets/js/core/bootstrap.min.js"></script>
     <script src="/template/assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -159,6 +152,85 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
+  <!-- Html5QrcodeScanne -->
+  <script>
+   let scannerInstance = null; // Definisikan scannerInstance di ruang lingkup global
+
+   function startScanner(targetId, overlayId, barcodeId, inputId, type) {
+    console.log(`Starting scanner for ${targetId}, overlay ${overlayId}, barcode ${barcodeId}, type ${type}`);
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        console.log("Browser does not support necessary media devices.");
+        alert("This browser does not support the necessary media devices.");
+        return;
+    }
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            console.log("Media stream obtained, showing scanner interface");
+            document.getElementById(targetId).style.display = 'block';
+            document.getElementById(overlayId).style.display = 'block';
+
+            // Selalu buat instance baru
+            console.log("Initializing new scanner...");
+            if (scannerInstance) {
+                scannerInstance.clear().catch(err => console.error("Failed to clear old scanner instance: ", err));
+            }
+            initializeScanner(targetId, barcodeId, inputId, type);
+        })
+        .catch(function(err) {
+            console.error("Error accessing the camera: ", err);
+            alert("Error accessing the camera: " + err.message);
+        });
+}
+
+function initializeScanner(targetId, barcodeId, inputId, type) {
+    console.log("Initializing scanner for target: " + targetId);
+    scannerInstance = new Html5QrcodeScanner(targetId, { fps: 10, qrbox: 250 }, true);
+    scannerInstance.render((result) => success(result, barcodeId, inputId, type), handleScanError);
+}
+
+function scanFeeder(index) {
+    console.log("Scanner Feeder Button Clicked");
+    startScanner(`reader_feeder_${index}`, `overlay_feeder_${index}`, `barcode_feeder_${index}`, `serial_number_${index}`, 'feeder');
+}
+
+function scanCobox(index) {
+    console.log("Scanner Cobox Button Clicked");
+    startScanner(`reader_cobox_${index}`, `overlay_cobox_${index}`, `barcode_cobox_${index}`, `cobox_id_${index}`, 'cobox');
+}
+
+function success(result, barcodeId, inputId, type) {
+    console.log(`Scanned barcode: ${result}, expected type: ${type}`);
+    if ((type === 'feeder' && result.length !== 19) || (type === 'cobox' && result.length !== 22)) {
+        alert(`Invalid barcode length for ${type}. Please scan a valid ${type} barcode.`);
+        return;
+    }
+
+    document.getElementById(barcodeId).innerHTML = `<p><a href="${result}">${result}</a></p>`;
+    document.getElementById(inputId).value = result;
+    closeScanner();
+}
+
+function handleScanError(err) {
+    console.error('Scanning Error:', err);
+}
+
+function closeScanner() {
+    console.log("Closing scanner...");
+    document.querySelectorAll('.scanner-popup').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+    if (scannerInstance) {
+        scannerInstance.clear().catch(err => {
+            console.error("Failed to clear the scanner: ", err);
+        });
+    }
+}
+
+
+    </script>
+
+
+
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
@@ -173,7 +245,6 @@
     <script src="/js/moment-with-locales.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/main.js"></script>
-
 
 
 </body>

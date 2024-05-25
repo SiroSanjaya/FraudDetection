@@ -11,7 +11,7 @@
             <li class="list-group-item"><a href="{{ route('users.index') }}">Manage Users</a></li>
             <li class="list-group-item"><a href="{{ route('roles.index') }}">Assign Permissions</a></li>
             <li class="list-group-item"><a href="{{ route('permissions.create') }}">Add New Permission</a></li>
-  
+
             <!-- Additional links can be added here if needed in the future -->
         </ul>
     </div>
@@ -74,7 +74,14 @@
 
 
 
-
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('DataPoint*') ? 'active' : '' }}" href="{{ route('DataPoint') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link text-white ms-1">Data Point</span>
+    </a>
+</li>
 <li class="nav-item">
     <a class="nav-link {{ request()->is('DataOrder*') ? 'active' : '' }}" href="{{ route('DataOrder') }}">
         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -90,7 +97,7 @@
         </div>
         <span class="nav-link text-white ms-1">Delivery Order</span>
     </a>
-</li>  
+</li>
 <li class="nav-item">
     <a class="nav-link {{ request()->is('PointActivity*') ? 'active' : '' }}" href="{{ route('PointActivity') }}">
         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

@@ -77,6 +77,10 @@ public function user()
     return $this->belongsTo(User::class, 'user_id');  // 'user_id' adalah foreign key di tabel orders yang mengarah ke users
 }
 
+public function fraudReport()
+{
+    return $this->hasOne(FraudReport::class, 'order_id', 'order_id');
+}
 
 }
 

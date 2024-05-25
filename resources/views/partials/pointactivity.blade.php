@@ -24,7 +24,7 @@
                         {{-- <span class="text-dark ms-sm-1 " style="font-size: smaller;">{{ $order->shipment->user->email }}</span> --}}
                     </div>
                     <div class="col-6 text-end">
-                        <a href="{{ route('DetailDelivery', ['orderId' => $order->order_id]) }}"><button class="btn btn-outline-success btn-sm mb-0">Detail</button></a>
+                        <a href="{{ route('PointDetail', ['orderId' => $order->order_id]) }}" class="btn btn-outline-success btn-sm">Detail</a>
                     </div>
                 </div>
             </div>

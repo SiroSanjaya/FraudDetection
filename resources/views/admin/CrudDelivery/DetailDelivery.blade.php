@@ -139,15 +139,19 @@
                             <a class="btn bg-gradient-success mb-0 btn-block" href="{{ route('DeliveryOrder') }}">&nbsp;&nbsp;Back</a>
                         </div>
                         <div class="col-auto">
-                            @if($order->status == 'shipped')
+                            @if($order->status == 'Shipped')
                                 <form action="{{ route('finishDelivery', ['orderId' => $order->order_id]) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-success">Finish Delivery</button>
+                                    <button type="submit" class="btn btn-success" onclick="showFinishConfirmation(event)">Finish Delivery</button>
                                 </form>
-                            @elseif($order->status == 'pending')
+                            @elseif($order->status == 'Pending')
                                 <form action="{{ route('acceptOrder', ['orderId' => $order->order_id]) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-success" onclick="showAcceptedConfirmation(event)">Accept Order</button>
+                                </form>
+                                <form action="{{ route('cancelOrder', ['orderId' => $order->order_id]) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger" onclick="showCancelConfirmation(event)">Cancel Order</button>
                                 </form>
                             @endif
                         </div>

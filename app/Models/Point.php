@@ -12,7 +12,8 @@ class Point extends Model
     protected $table = 'points';  // Pastikan ini sesuai dengan nama tabel yang sebenarnya di database Anda
 
     protected $fillable = [
-        'point_name'  // Sesuaikan ini dengan kolom yang ada di tabel points
+        'point_name',
+        'location'  // Sesuaikan ini dengan kolom yang ada di tabel points
     ];
 
     public function orders()

@@ -43,16 +43,18 @@ Route::get('/', function () {
 
 Route::prefix('DataOrder')->group(function () {
     Route::get('/', [PagesController::class, 'DataOrder'])->name('DataOrder');
-    Route::get('/AddAttendence', [PagesController::class, 'AddAttendence'])->name('AddAttendence');
-    Route::get('/EditAttendence', [PagesController::class, 'EditAttendence'])->name('EditAttendence');
+    Route::get('/DetailOrder/{orderId}', [PagesController::class, 'DetailOrder'])->name('DetailOrder');
+    Route::get('/DetailFraud/{orderId}', [PagesController::class, 'DetailFraud'])->name('DetailFraud');
+    Route::get('/searchOrders', [CRUDController::class, 'searchOrders'])->name('searchOrders');
 });
 Route::prefix('DeliveryOrder')->group(function () {
     Route::get('/', [PagesController::class, 'DeliveryOrder'])->name('DeliveryOrder');
-    Route::get('/DetailOrder/{orderId}', [PagesController::class, 'DetailOrder'])->name('DetailOrder');
     Route::post('/assign-driver', [CRUDController::class, 'assignDriver'])->name('assign.driver');
     Route::get('/DetailDelivery/{orderId}', [PagesController::class, 'DetailDelivery'])->name('DetailDelivery');
     Route::post('/acceptOrder/{orderId}', [CrudController::class, 'acceptOrder'])->name('acceptOrder');
     Route::post('/finishDelivery/{orderId}', [CrudController::class, 'finishDelivery'])->name('finishDelivery');
+    Route::post('/cancelOrder/{orderId}', [CrudController::class, 'cancelOrder'])->name('cancelOrder');
+
 
 });
 Route::get('', [PagesController::class, 'dashboard'])->name('dashboard');
@@ -65,6 +67,16 @@ Route::post('/SelectedRegion', [CrudController::class, 'SelectedRegion'])->name(
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::prefix('DataPoint')->group(function () {
+    Route::get('/', [PagesController::class, 'DataPoint'])->name('DataPoint');
+    Route::get('/AddPoint', [PagesController::class, 'AddPoint'])->name('AddPoint');
+    Route::get('/EditPoint/{id}', [PagesController::class, 'EditPoint'])->name('EditPoint');
+    Route::post('/DataPoint/CreatePoint', [CRUDController::class, 'CreatePoint'])->name('CreatePoint');
+    Route::delete('/delete/{id}',  [CRUDController::class, 'delete'])->name('delete');
+    Route::post('/update-point/{id}', [CRUDController::class, 'UpdatePoint'])->name('update-point');
+
+});
+
 
 Route::prefix('Point')->group(function () {
     Route::get('/', [PagesController::class, 'Point'])->name('Point');
@@ -72,6 +84,8 @@ Route::prefix('Point')->group(function () {
     Route::get('/PointDetail/{orderId}', [PagesController::class, 'PointDetail'])->name('PointDetail');
     Route::get('/AddPointActivity/{orderId}', [PagesController::class, 'AddPointActivity'])->name('AddPointActivity');
     Route::post('/submit-activity', [CRUDController::class, 'processActivityForm'])->name('processActivityForm');
+    Route::post('/complete-activity', [CRUDController::class, 'completeActivity'])->name('completeActivity');
+
 });
 
 Route::prefix('DataUser')->group(function () {
@@ -92,7 +106,7 @@ Route::middleware(['auth','checkrole'])->group(function () {
         Route::post('/leads/{lead}/approve', [LeadController::class, 'approve'])->name('leads.approve');
         Route::post('/leads/{lead}/disapprove', [LeadController::class, 'disapprove'])->name('leads.disapprove');
         Route::get('/lead-approvals', [LeadController::class, 'approvalIndex'])->name('lead.approvals.index');
-        
+
 
         // User management
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -135,8 +149,8 @@ Route::middleware(['auth','checkrole'])->group(function () {
         });
         Route::get('/api/customers/{customer}', [CustomerController::class, 'getDetails']);
 
- 
-    
+
+
 });
 
 
@@ -203,12 +217,12 @@ Route::get('test-role/{role_id}', function ($role_id) {
             Route::post('/AddedQuizDetail', [CrudController::class, 'AddedQuizDetail'])->name('AddedQuizDetail');
             Route::get('/DeleteQuiz/{id}', [CrudController::class, 'DeleteQuizDetail'])->name('DeleteQuizDetail');
             Route::get('/DeleteQuiz/{id}', [CrudController::class, 'DeleteQuiz'])->name('DeleteQuiz');
-            
+
             Route::prefix('QuizDetail/{id}')->group(function () {
                 Route::get('/', [PagesController::class, 'QuizDetail'])->name('QuizDetail');
                 Route::get('/AddQuestion', [PagesController::class, 'AddQuestion'])->name('AddQuestion');
                 Route::post('/AddedQuestion', [CrudController::class, 'AddedQuestion'])->name('AddedQuestion');
-                
+
                 Route::prefix('')->group(function () {
                     Route::get('/EditQuizDetail/{QuestionID}', [PagesController::class, 'EditQuizDetail'])->name('EditQuizDetail');
                     Route::post('/EditedQuizDetail/{QuestionID}', [CrudController::class, 'EditedQuizDetail'])->name('EditedQuizDetail');

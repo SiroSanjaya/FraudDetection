@@ -20,11 +20,11 @@ function getThumbnailFromLink(link) {
     }
 }
 
-fileInput.addEventListener("change", function () {
+fileInput.addEventListener("change", function() {
     const file = fileInput.files[0];
     const reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = function(e) {
         previewImage.src = e.target.result;
         previewImage.style.display = "block";
     };
@@ -32,7 +32,7 @@ fileInput.addEventListener("change", function () {
     reader.readAsDataURL(file);
 });
 
-imageLinkInput.addEventListener("input", function () {
+imageLinkInput.addEventListener("input", function() {
     const imageLink = getThumbnailFromLink(imageLinkInput.value);
     previewImageLink.src = imageLink;
     previewImageLink.style.display = "block";
@@ -42,7 +42,7 @@ imageLinkInput.addEventListener("input", function () {
 // Delete PopUp
 
 function showDeleteConfirmation(element) {
-    
+
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -56,6 +56,96 @@ function showDeleteConfirmation(element) {
         if (result.isConfirmed) {
             window.location.href = element.getAttribute('data-href');
         }
+    });
+}
+
+function showCancelConfirmation(element) {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Are you sure you want to cancel this order?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Cancel it!",
+    }).then((result) => {
+        // If user clicks on 'Yes, delete it!' button, proceed with the deletion
+        if (result.isConfirmed) {
+            window.location.href = element.getAttribute('data-href');
+        }
+    });
+
+
+}
+
+function showFinishConfirmation(element) {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Are you sure you want to Finish this order?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Finish it!",
+    }).then((result) => {
+        // If user clicks on 'Yes, delete it!' button, proceed with the deletion
+        if (result.isConfirmed) {
+            window.location.href = element.getAttribute('data-href');
+        }
+    });
+
+
+}
+
+function showDeletePointConfirmation(url) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Are you sure you want to delete this Point?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deletePoint(url);
+        }
+    });
+}
+
+function deletePoint(url) {
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Jangan lupa untuk mengganti token CSRF dengan token yang sesuai
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            Swal.fire({
+                title: "Deleted!",
+                text: "The point has been deleted.",
+                icon: "success",
+            }).then(() => {
+                window.location.reload(); // Reload halaman setelah penghapusan berhasil
+            });
+        } else {
+            Swal.fire({
+                title: "Failed!",
+                text: "Failed to delete the point.",
+                icon: "error",
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: "Error!",
+            text: "An error occurred while trying to delete the point.",
+            icon: "error",
+        });
     });
 }
 
