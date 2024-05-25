@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Blade::directive('isRequired', function ($expression) {
+            return "<?php echo in_array('required', explode('|', \$rules[$expression])) ? '<span style=\"color: red;\">*</span>' : ''; ?>";
+        });
     }
 }

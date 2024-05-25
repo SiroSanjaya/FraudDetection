@@ -79,6 +79,7 @@
                         </div>
 
                         <!-- Pending Tab Content -->
+<<<<<<< HEAD
                         <div class="tab-pane fade show active" id="pending" role="tabpanel">
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
@@ -145,6 +146,74 @@
                                 </table>
                             </div>
                         </div>
+=======
+<div class="tab-pane fade show active" id="pending" role="tabpanel">
+    <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Point</th>
+                    <th>Feeder Type</th>
+                    <th>Request Quantity</th>
+                    <th>Driver PIC</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($pendingOrders as $order)
+                <tr>
+                    <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->customer->name ?? 'No Customer' }}</td>
+                    <td>{{ $order->point->point_name ?? 'No Point' }}</td>
+                    <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
+                    <td>{{ $order->getTotalQuantityAttribute() }}</td>
+                    <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
+                    <td>
+                        <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Created Tab Content -->
+<div class="tab-pane fade" id="created" role="tabpanel">
+    <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Point</th>
+                    <th>Feeder Type</th>
+                    <th>Request Quantity</th>
+                    <th>Driver PIC</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($createdOrders as $order)
+                <tr>
+                    <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->customer->name ?? 'No Customer' }}</td>
+                    <td>{{ $order->point->point_name ?? 'No Point' }}</td>
+                    <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
+                    <td>{{ $order->getTotalQuantityAttribute() }}</td>
+                    <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
+                    <td>
+                        <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
                         <!-- Shipped Tab Content -->
                         <div class="tab-pane fade" id="shipped" role="tabpanel">
                             <div class="table-responsive p-0">
@@ -201,6 +270,7 @@
                                             <td>{{ $order->getFirstCoboxNameAttribute() }}</td>
                                             <td>{{ $order->getTotalQuantityAttribute() }}</td>
                                             <td>{{ $order->user->username ?? 'Not Assigned' }}</td>
+<<<<<<< HEAD
                                             <td>
                                                 <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                                             </td>
@@ -237,6 +307,8 @@
                                             <td class="{{ $order->fraudReport->status == 'Verified' ? 'text-success' : ($order->fraudReport->status == 'Fraud' ? 'text-danger' : '') }}">
                                                 {{ $order->fraudReport->status ?? 'Not Checked' }}
                                             </td>
+=======
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
                                             <td>
                                                 <a href="{{ route('DetailOrder', ['orderId' => $order->order_id]) }}" class="btn btn-sm btn-primary">Detail</a>
                                             </td>

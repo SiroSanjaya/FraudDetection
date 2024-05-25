@@ -64,6 +64,7 @@ class PagesController extends Controller
     }
 
 
+<<<<<<< HEAD
     public function DataOrder(Request $request)
     {
         $search = $request->input('search');
@@ -129,19 +130,48 @@ class PagesController extends Controller
         $completedOrders = $completedQuery->paginate(10);
     
         return view('admin.DataOrder', [
+=======
+
+
+
+
+    public function DataOrder()
+    {
+        // Fetch all orders with necessary relationships
+        $orders = Order::with(['user', 'customer', 'point'])->get();
+    
+        // Filter orders based on their status
+        $pendingOrders = $orders->where('status', 'pending');
+        $createdOrders = $orders->whereNotNull('user_id');
+        $shippedOrders = $orders->where('status', 'shipped');
+        $deliveredOrders = $orders->where('status', 'delivered');
+        $drivers = User::role('driver')->get();  // Assuming you are using a package like spatie/laravel-permission
+    
+        return view('admin.DataOrder', [
+            'orders' => $orders,
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
             'pendingOrders' => $pendingOrders,
             'createdOrders' => $createdOrders,
             'shippedOrders' => $shippedOrders,
             'deliveredOrders' => $deliveredOrders,
+<<<<<<< HEAD
             'completedOrders' => $completedOrders,
+=======
+            'drivers' => $drivers
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
         ]);
     }
 
 
     public function DetailOrder($orderId)
     {
+<<<<<<< HEAD
         $order = Order::with(['customer', 'items', 'user'])->findOrFail($orderId);
         $users = User::all();
+=======
+        $order = Order::with(['customer', 'items'])->findOrFail($orderId);
+        $users = User::role('driver')->get();
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
 
         // Mengambil satu shipment yang terkait dengan order_id tertentu
         $shipment = Shipment::with(['user', 'point', 'order'])

@@ -72,6 +72,7 @@ public function shipment()
     // Jika kunci asing di tabel shipment adalah 'order_id' dan primary key di Order juga 'order_id'
 }
 
+<<<<<<< HEAD
 public function user()
 {
     return $this->belongsTo(User::class, 'user_id');  // 'user_id' adalah foreign key di tabel orders yang mengarah ke users
@@ -82,6 +83,12 @@ public function fraudReport()
     return $this->hasOne(FraudReport::class, 'order_id', 'order_id');
 }
 
+=======
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');  // Ensure this is correctly defined
+    }
+>>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
 }
 
 
