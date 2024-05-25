@@ -64,76 +64,6 @@ class PagesController extends Controller
     }
 
 
-<<<<<<< HEAD
-    public function DataOrder(Request $request)
-    {
-        $search = $request->input('search');
-        $status = $request->input('status');
-    
-        $pendingQuery = Order::whereNull('user_id');
-        $createdQuery = Order::whereNotNull('user_id');
-        $shippedQuery = Order::where('status', 'Shipped');
-        $deliveredQuery = Order::where('status', 'Delivered');
-        $completedQuery = Order::where('status', 'Completed');
-    
-        if ($search) {
-            $pendingQuery->where(function ($q) use ($search) {
-                $q->where('order_id', 'LIKE', "%$search%")
-                  ->orWhereHas('customer', function ($q) use ($search) {
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
-            });
-    
-            $createdQuery->where(function ($q) use ($search) {
-                $q->where('order_id', 'LIKE', "%$search%")
-                  ->orWhereHas('customer', function ($q) use ($search) {
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
-            });
-    
-            $shippedQuery->where(function ($q) use ($search) {
-                $q->where('order_id', 'LIKE', "%$search%")
-                  ->orWhereHas('customer', function ($q) use ($search) {
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
-            });
-    
-            $deliveredQuery->where(function ($q) use ($search) {
-                $q->where('order_id', 'LIKE', "%$search%")
-                  ->orWhereHas('customer', function ($q) use ($search) {
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
-            });
-    
-            $completedQuery->where(function ($q) use ($search) {
-                $q->where('order_id', 'LIKE', "%$search%")
-                  ->orWhereHas('customer', function ($q) use ($search) {
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
-            });
-        }
-    
-        if ($status) {
-            if ($status == 'Fraud' || $status == 'Verified') {
-                $completedQuery->whereHas('fraudReport', function ($q) use ($status) {
-                    $q->where('status', $status);
-                });
-            } else {
-                $completedQuery->where('status', $status);
-            }
-        }
-    
-        $pendingOrders = $pendingQuery->paginate(10);
-        $createdOrders = $createdQuery->paginate(10);
-        $shippedOrders = $shippedQuery->paginate(10);
-        $deliveredOrders = $deliveredQuery->paginate(10);
-        $completedOrders = $completedQuery->paginate(10);
-    
-        return view('admin.DataOrder', [
-=======
-
-
-
 
     public function DataOrder()
     {
@@ -141,37 +71,30 @@ class PagesController extends Controller
         $orders = Order::with(['user', 'customer', 'point'])->get();
     
         // Filter orders based on their status
-        $pendingOrders = $orders->where('status', 'pending');
+        $pendingOrders = $orders->where('status', 'Pending');
         $createdOrders = $orders->whereNotNull('user_id');
-        $shippedOrders = $orders->where('status', 'shipped');
-        $deliveredOrders = $orders->where('status', 'delivered');
+        $shippedOrders = $orders->where('status', 'Shipped');
+        $deliveredOrders = $orders->where('status', 'Delivered');
+        $completedOrders = $orders->where('status', 'Completed');
         $drivers = User::role('driver')->get();  // Assuming you are using a package like spatie/laravel-permission
     
         return view('admin.DataOrder', [
             'orders' => $orders,
->>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
             'pendingOrders' => $pendingOrders,
             'createdOrders' => $createdOrders,
             'shippedOrders' => $shippedOrders,
             'deliveredOrders' => $deliveredOrders,
-<<<<<<< HEAD
             'completedOrders' => $completedOrders,
-=======
             'drivers' => $drivers
->>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
         ]);
     }
 
 
     public function DetailOrder($orderId)
     {
-<<<<<<< HEAD
-        $order = Order::with(['customer', 'items', 'user'])->findOrFail($orderId);
-        $users = User::all();
-=======
+
         $order = Order::with(['customer', 'items'])->findOrFail($orderId);
         $users = User::role('driver')->get();
->>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
 
         // Mengambil satu shipment yang terkait dengan order_id tertentu
         $shipment = Shipment::with(['user', 'point', 'order'])

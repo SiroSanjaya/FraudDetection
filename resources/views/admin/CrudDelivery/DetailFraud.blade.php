@@ -84,7 +84,7 @@
                                                 @if ($fraudReports->isNotEmpty() && $fraudReports->first()->photo_path)
                                                 <div style="margin-bottom: 16px;">
                                                     <span style="display: inline-block; width: 150px;">Photo</span>:
-                                                    <img src="{{ asset('storage/' . $fraudReports->first()->photo_path) }}" alt="Fraud Report Photo" class="img-fluid">
+                                                    <img src="{{ asset('public/fraud_reports' . $fraudReports->first()->photo_path) }}" alt="Fraud Report Photo" class="img-fluid">
                                                 </div>
                                             @else
                                                 <div>No photo available for this fraud report.</div>

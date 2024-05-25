@@ -144,7 +144,7 @@ public function processActivityForm(Request $request) {
         'location_map' => $request->input('location_map'),
         'status' => $status,
         'point_name' => $point_name,
-        'photo_path' => $request->file('photo')->store('public/fraud_reports')
+        'photo_path' => $request->file('photo')->store('fraud_reports', 'public')
     ]);
 
     // Update status pesanan menjadi 'done' terlepas dari apakah ada kecurangan atau tidak

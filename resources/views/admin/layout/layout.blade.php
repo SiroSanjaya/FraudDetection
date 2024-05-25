@@ -34,15 +34,15 @@
     <script src="/js/script.js"></script>
     <script src="/js/leads.js"></script>
     <script src="/js/jquery.min.js"></script>
-<<<<<<< HEAD
+
     <script src="./node_modules/html5-qrcode/html5-qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-=======
+
     <script src="/js/rome.js"></script>
     <script src="/js/moment-with-locales.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     
->>>>>>> 7549a7558afdd40b5aa9956ce8b4bf8974b17071
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
