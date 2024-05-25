@@ -93,9 +93,8 @@ Route::middleware(['auth','checkrole'])->group(function () {
         Route::post('/leads/{lead}/disapprove', [LeadController::class, 'disapprove'])->name('leads.disapprove');
         Route::get('/lead-approvals', [LeadController::class, 'approvalIndex'])->name('lead.approvals.index');
         Route::post('/leads/ocr-ktp', [LeadController::class, 'ocrKtp'])->name('leads.ocr-ktp');
-        
-
-
+        Route::post('/leads/verify-email', [LeadController::class, 'verifyEmail'])->name('leads.verifyEmail');
+        Route::post('/leads/verify-phone-number', [LeadController::class, 'verifyPhoneNumber'])->name('leads.verifyPhoneNumber');
         
 
         // User management

@@ -28,6 +28,8 @@
         <ul class="list-group">
             <li class="list-group-item"><a href="{{ route('leads.index') }}">View Leads</a></li>
             <li class="list-group-item"><a href="{{ route('leads.create') }}">Create Lead</a></li>
+            <li class="list-group-item"><a href="{{ route('lead.approvals.index') }}">Leads Approval</a></li>
+
         </ul>
     </div>
 </li>

@@ -21,52 +21,51 @@
     </form>
     
     <div class="table-responsive p-0">
-    @if ($leads->isEmpty())
-    <p>No records found for the selected status.</p>
-    @else
-        <!-- Display the list of leads -->
-        <table class="table align-items-center justify-content-center mb-0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Status</th>
-                    <th>Salutation</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Kota</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-        <tbody>
-                @foreach ($leads as $lead)
-                <tr>
-                    <td>{{ $lead->id }}</td>
-                    <td>{{ $lead->status }}</td>
-                    <td>{{ $lead->salutation }}</td>
-                    <td>{{ $lead->first_name }}</td>
-                    <td>{{ $lead->last_name }}</td>
-                    <td>{{ $lead->phone_number }}</td>
-                    <td>{{ $lead->kota }}</td>
-                    <td>
-                    <a href="{{ route('leads.show', $lead->id) }}" class="btn btn-info btn-sm">
-                        <i class="fa fa-eye" title="View Details"></i>
-                    </a>
-                        @role('admin')
-                        <form action="{{ route('leads.destroy', $lead->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash" title="Delete"></i>
-                            </button>   
-                        </form>
-                        @endrole
-                    </td>                  
-                </tr>
-                @endforeach
-            </tbody>
-    @endif          
-        </table>
+        @if ($leads->isEmpty())
+            <p>No records found for the selected status.</p>
+        @else
+            <!-- Display the list of leads -->
+            <table class="table align-items-center justify-content-center mb-0">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Salutation</th>
+                        <th>Full Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($leads as $lead)
+                        <tr>
+                            <td>{{ $lead->status }}</td>
+                            <td>{{ $lead->salutation }}</td>
+                            <td>{{ $lead->first_name }} {{ $lead->last_name }}</td>
+                            <td>{{ $lead->phone_number }}</td>
+                            <td>{{ $lead->email }}</td>
+                            <td>
+                                <a href="{{ route('leads.show', $lead->id) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-eye" title="View Details"></i>
+                                </a>
+                                <a href="{{ route('leads.edit', $lead->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-pencil-alt" title="Edit"></i>
+                                </a>
+                                @role('admin')
+                                <form action="{{ route('leads.destroy', $lead->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash" title="Delete"></i>
+                                    </button>   
+                                </form>
+                                @endrole
+                            </td>                  
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif          
     </div>  
 </div>
 @endsection

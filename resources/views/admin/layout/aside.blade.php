@@ -26,6 +26,9 @@
     @include('admin.layout.navbar.salesManager_user')
     @endrole
 
+    @role('sales')
+    @include('admin.layout.navbar.sales_user')
+    @endrole
 
     
       </ul>
