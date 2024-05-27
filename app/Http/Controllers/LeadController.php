@@ -350,10 +350,23 @@ class LeadController extends Controller
         $request->validate([
             'email' => 'required|email'
         ]);
-
+    
         $email = $request->input('email');
-        $verificationResult = $this->zeroBounceService->verifyEmail($email);
-
+        $emailDomain = substr(strrchr($email, "@"), 1);
+    
+        if ($emailDomain === 'gmail.com') {
+            $verificationResult = [
+                'status' => 'valid',
+                'email' => $email,
+            ];
+        } else {
+            $verificationResult = [
+                'status' => 'invalid',
+                'email' => $email,
+            ];
+        }
+    
         return response()->json($verificationResult);
     }
+    
 }

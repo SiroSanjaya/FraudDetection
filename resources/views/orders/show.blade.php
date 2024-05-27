@@ -15,19 +15,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Item ID</th>
+                        <th>Product ID</th>
                         <th>Product Name</th>
                         <th>Quantity</th>
+                        <th>Serial Number</th>
+                        <th>Cobox ID</th>
                         <th>Unit Price</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($order->items as $item)
+                    @foreach ($order->orderItems as $item)
                     <tr>
-                        <td>{{ $item->item_id }}</td>
+                        <td>{{ $item->product_id }}</td>
                         <td>{{ $item->product->name }}</td>
                         <td>{{ $item->quantity }}</td>
+                        <td>{{ $item->serial_number }}</td>
+                        <td>{{ $item->cobox_id }}</td>
                         <td>${{ number_format($item->product->price, 2) }}</td>
                         <td>${{ number_format($item->quantity * $item->product->price, 2) }}</td>
                     </tr>

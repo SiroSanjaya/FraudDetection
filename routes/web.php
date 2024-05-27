@@ -12,6 +12,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
+use App\Models\Item;
+use App\Models\Customer;
+
 
 
 use App\Mail\TestEmail;
@@ -151,7 +154,14 @@ Route::middleware(['auth','checkrole'])->group(function () {
             Route::delete('{order}', [OrderController::class, 'destroy'])->name('destroy');  // Delete an order
         });
         Route::get('/api/customers/{customer}', [CustomerController::class, 'getDetails']);
-
+        Route::get('/api/items/{item_id}', function($item_id) {
+            return Item::findOrFail($item_id);
+        });
+        Route::get('/api/customers/{customer_id}', function($customer_id) {
+            return Customer::findOrFail($customer_id);
+        });
+        
+        
 
 
 });

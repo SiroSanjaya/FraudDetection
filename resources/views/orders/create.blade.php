@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Create New Order</h1>
-    <form action="{{ route('orders.store') }}" method="POST">
+    <form action="{{ route('orders.storeWithItems') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="customer_id">Customer:</label>
@@ -40,17 +40,36 @@
             </select>
         </div>
 
-        <label for="products">Products:</label>
-        @foreach ($products as $product)
-            <div class="form-group">
-                <label>{{ $product->name }} - ${{ number_format($product->price, 2) }} - Stock: {{ $product->stock }}</label>
-                <input type="number" name="quantities[{{ $product->product_id }}]" class="form-control" value="0" min="0" max="{{ $product->stock }}" placeholder="Enter quantity">
+        <div id="order-items">
+            <label for="products">Products:</label>
+            <div class="order-item" data-index="0">
+                <div class="form-group">
+                    <label for="items[0][product_id]">Product:</label>
+                    <select name="items[0][product_id]" class="form-control" onchange="fetchItemDetails(this, 0)" required>
+                        <option value="">Select a Product</option>
+                        @foreach ($products as $product)
+                            <option value="{{ $product->product_id }}">
+                                {{ $product->name }} - ${{ number_format($product->price, 2) }} - Stock: {{ $product->stock }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="itemDetails0" style="display: none;">
+                    <p><strong>Serial Number:</strong> <span id="itemSerialNumber0"></span></p>
+                    <p><strong>Cobox ID:</strong> <span id="itemCoboxId0"></span></p>
+                </div>
+                <div class="form-group">
+                    <label for="items[0][quantity]">Quantity:</label>
+                    <input type="number" name="items[0][quantity]" class="form-control" min="1" placeholder="Enter quantity" required>
+                </div>
             </div>
-        @endforeach
+        </div>
 
+        <button type="button" id="add-item" class="btn btn-secondary">Add Another Item</button>
         <button type="submit" class="btn btn-primary">Submit Order</button>
     </form>
 </div>
+
 <script>
 function fetchCustomerDetails() {
     var customerId = document.getElementById('customer_id').value;
@@ -68,5 +87,18 @@ function fetchCustomerDetails() {
         })
         .catch(error => console.error('Error fetching customer details:', error));
 }
-</script>
-@endsection
+
+function fetchItemDetails(selectElement, index) {
+    var productId = selectElement.value;
+    if (!productId) {
+        document.getElementById('itemDetails' + index).style.display = 'none';
+        return;
+    }
+    fetch('/api/items/' + productId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('itemSerialNumber' + index).textContent = data.serial_number;
+            document.getElementById('itemCoboxId' + index).textContent = data.cobox_id;
+            document.getElementById('itemDetails' + index).style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching item details:', error));

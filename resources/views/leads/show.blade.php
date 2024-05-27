@@ -19,7 +19,6 @@
 @endphp
 <div class="container mt-4">
     <h1>Lead Details</h1>
-    <a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>
 
     <div>
         @if(auth()->user()->hasRole(['salesManager']))

@@ -120,9 +120,9 @@
 
         <div class="form-group">
             <label for="survey_images">Survey Images: @isRequired('survey_images.*')</label>
-            <input type="file" class="form-control" id="survey_images" name="survey_images[]" accept="image/*" multiple onchange="previewSurveyImages()">
+            <input type="file" class="form-control" id="survey_images" name="survey_images[]" accept="image/*" multiple onchange="previewSurveyImages()" >
         </div>
-        <div id="imagePreview" class="row"></div>
+        <div id="imagePreview" class="row" ></div>
 
         <button type="submit" class="btn btn-primary">Add Lead</button>
     </form>
@@ -141,7 +141,7 @@ function previewSurveyImages() {
                 reader.onload = function(e) {
                     var img = document.createElement('img');
                     img.src = e.target.result;
-                    img.style.maxWidth = '100%';
+                    img.style.maxWidth = '300px';
                     img.style.margin = '10px';
                     previewContainer.appendChild(img);
                 }

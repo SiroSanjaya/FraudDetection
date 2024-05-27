@@ -28,5 +28,10 @@ class Item extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    public function orderItems()
+    {
+        return $this->belongsToMany(OrderItem::class, 'order_item_products', 'product_id', 'order_item_id');
+    }
+
     // Additional methods and relationships can be added here
 }
