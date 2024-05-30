@@ -142,6 +142,8 @@ Route::middleware(['auth','checkrole'])->group(function () {
         Route::post('/items', [ItemController::class, 'store'])->name('items.store');
         Route::get('items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
         Route::put('items/{item}', [ItemController::class, 'update'])->name('items.update');
+        Route::get('items/qr-code/{serialNumber}/{productType}/{coboxId}', [ItemController::class, 'generateQRCode'])->name('items.qr-code');
+
 
         // Route group for orders
         Route::prefix('orders')->name('orders.')->middleware(['auth'])->group(function () {

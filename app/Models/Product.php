@@ -18,9 +18,14 @@ class Product extends Model
     /**
      * Get the items associated with the product.
      */
-    public function items()
+    public function itemsNew()
     {
-        return $this->hasMany(Item::class, 'product_id');
+        return $this->hasMany(ItemNew::class, 'product_id', 'product_id');
+    }
+
+    public function getStockAttribute()
+    {
+        return $this->itemsNew()->where('is_available', true)->count();
     }
 
     // Additional methods and relationships can be added here

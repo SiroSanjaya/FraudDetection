@@ -1,21 +1,22 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderNew extends Model
 {
+    protected $table = 'order_new';
     protected $primaryKey = 'order_id';
-    public $incrementing = false; // Because order_id is varchar
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
-        'customer_id', 'order_date', 'status', 'total_amount', 'user_id', 'point_id', // Add other necessary fields
+        'user_id', 'order_date', 'total_amount', 'customer_id', 'point_id', 'qty', 'status'
     ];
 
-    public function orderItems()
+    public function items()
     {
-        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
+        return $this->hasMany(ItemNew::class, 'order_id', 'order_id');
     }
 
     public function customer()

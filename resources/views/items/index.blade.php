@@ -28,8 +28,8 @@
             <tr>
                 <th>Name</th>
                 <th>Serial Number</th>
-                <th>Cobox Name</th>
                 <th>Cobox ID</th>
+                <th>Generate QR Code</th>
             </tr>
         </thead>
         <tbody>
@@ -37,8 +37,8 @@
             <tr>
                 <td>{{ $item->product->name }}</td> <!-- Access the product name directly from the item -->
                 <td>{{ $item->item_serial_number }}</td>
-                <td>{{ $item->cobox_name }}</td>
                 <td>{{ $item->cobox_id }}</td>
+                <td><a href="{{ route('items.qr-code', ['serialNumber' => $item->item_serial_number, 'productType' => $item->product_id, 'coboxId' => $item->cobox_id]) }}" class="btn btn-primary" target="_blank">Generate QR Code</a></td>
             </tr>
         @endforeach
 

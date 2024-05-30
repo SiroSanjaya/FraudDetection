@@ -12,6 +12,7 @@
         "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.8",
         "league/oauth2-google": "^4.0",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^6.7"
     },
     "require-dev": {

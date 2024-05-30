@@ -92,10 +92,6 @@
             <input type="text" class="form-control" name="NIK" id="NIK">
         </div>
         <div class="form-group">
-            <label for="NPWP">NPWP: @isRequired('NPWP')</label>
-            <input type="text" class="form-control" name="NPWP"id="NPWP">
-        </div>
-        <div class="form-group">
             <label for="status">Status: @isRequired('status')</label>
             <select name="status" class="form-control">
                 <option value="open" selected>Open</option>
